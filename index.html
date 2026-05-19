@@ -1,146 +1,219 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hifest Data Team</title>
-</head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
+  <title>HI-FEST 2026 | Internal Portal</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
 
-  <!-- ========================================
-       STICKY NAVBAR
-  ========================================= -->
-  <header id="main-header">
-    <nav class="navbar">
-      
-      <!-- Logo / Brand -->
-      <div class="nav-brand">
-        <h1 class="brand-title">HIFEST DATA TEAM</h1>
-      </div>
+  <!-- ========================= -->
+  <!-- NAVBAR -->
+  <!-- ========================= -->
 
-      <!-- Navigation Menu -->
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a href="#home-section" class="nav-link">Home</a>
-        </li>
+  <header class="navbar">
+    <div class="logo">HIFEST 2026</div>
 
-        <li class="nav-item">
-          <a href="#about-section" class="nav-link">About Us</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#timeline-section" class="nav-link">Our Timeline</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#job-section" class="nav-link">Our Job</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#update-section" class="nav-link">Update Data</a>
-        </li>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About Us</a></li>
+        <li><a href="#timeline" class="nav-link">Our Timeline</a></li>
+        <li><a href="#job" class="nav-link">Our Job</a></li>
+        <li><a href="#update-data" class="nav-link">Update Data</a></li>
       </ul>
-
     </nav>
   </header>
 
-  <!-- ========================================
-       HORIZONTAL SCROLL WRAPPER
-  ========================================= -->
-  <main id="horizontal-wrapper">
+  <!-- ========================= -->
+  <!-- MAIN WRAPPER -->
+  <!-- ========================= -->
 
-    <!-- ========================================
-         SECTION 1 : HOME
-    ========================================= -->
-    <section id="home-section" class="page-section">
+  <main class="horizontal-wrapper">
 
-      <div class="section-container">
+    <!-- ========================= -->
+    <!-- HOME -->
+    <!-- ========================= -->
 
-        <!-- Hero Content -->
-        <div class="hero-content">
+    <section id="home" class="panel home-panel">
 
-          <span class="hero-label">
-            Welcome To
-          </span>
+      <div class="hero-content">
 
-          <h2 class="hero-title">
-            HIFEST DATA CENTER
-          </h2>
+        <span class="portal-tag">
+          INTERNAL PORTAL
+        </span>
 
-          <p class="hero-description">
-            Tim pendataan Hifest bertugas mengelola,
-            merekap, dan memvisualisasikan seluruh data
-            kegiatan secara sistematis, cepat, dan akurat.
+        <h1>
+          HI-FEST 2026 <br />
+          Data Management System
+        </h1>
+
+        <p>
+          Centralized internal platform for monitoring participant
+          validation, workflow tracking, timeline coordination,
+          and statistical reporting for HI-FEST 2026 operations.
+        </p>
+
+        <a href="#update-data" class="cta-button">
+          Open Statistics Dashboard
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- ABOUT -->
+    <!-- ========================= -->
+
+    <section id="about" class="panel about-panel">
+
+      <div class="section-header">
+        <span>OUR TEAM</span>
+        <h2>About Us</h2>
+      </div>
+
+      <div class="team-grid">
+
+        <div class="team-card">
+          <div class="card-icon">👨‍💻</div>
+          <h3>Azriel Putra</h3>
+          <p>Lead Front-End Developer</p>
+        </div>
+
+        <div class="team-card">
+          <div class="card-icon">📊</div>
+          <h3>Zidan</h3>
+          <p>Database & Monitoring Staff</p>
+        </div>
+
+        <div class="team-card">
+          <div class="card-icon">⚙️</div>
+          <h3>Member 3</h3>
+          <p>System Coordination Officer</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- TIMELINE -->
+    <!-- ========================= -->
+
+    <section id="timeline" class="panel timeline-panel">
+
+      <div class="section-header">
+        <span>WORKFLOW</span>
+        <h2>Our Timeline</h2>
+      </div>
+
+      <div class="timeline-container">
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-1"></div>
+
+          <div class="timeline-content">
+            <h3>Phase 1: Sistem & Database</h3>
+            <p>
+              Setup initial participant system,
+              database architecture, and internal
+              monitoring workflow for all divisions.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-2"></div>
+
+          <div class="timeline-content">
+            <h3>Phase 2: Validasi Harian</h3>
+            <p>
+              Daily verification process including
+              document checking, participant validation,
+              and quota synchronization.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-3"></div>
+
+          <div class="timeline-content">
+            <h3>Phase 3: Finalisasi Data</h3>
+            <p>
+              Final reporting, statistical recap,
+              participant confirmation, and archival
+              process before event execution.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- JOB -->
+    <!-- ========================= -->
+
+    <section id="job" class="panel job-panel">
+
+      <div class="section-header">
+        <span>RESPONSIBILITIES</span>
+        <h2>Our Job</h2>
+      </div>
+
+      <div class="job-grid">
+
+        <div class="job-card">
+
+          <div class="job-icon">
+            📁
+          </div>
+
+          <h3>Validasi Berkas</h3>
+
+          <p>
+            Responsible for validating participant
+            administrative documents, checking
+            submission completeness, and ensuring
+            all uploaded data complies with internal
+            event regulations and operational standards.
           </p>
 
         </div>
 
-        <!-- Optional Decoration / Illustration -->
-        <div class="hero-visual">
-          <!-- Slot kosong untuk ilustrasi / image -->
-        </div>
+        <div class="job-card">
 
-      </div>
-
-    </section>
-
-    <!-- ========================================
-         SECTION 2 : ABOUT US
-    ========================================= -->
-    <section id="about-section" class="page-section">
-
-      <div class="section-container">
-
-        <!-- Section Heading -->
-        <div class="section-heading">
-          <span class="section-subtitle">Who We Are</span>
-          <h2 class="section-title">About Us</h2>
-        </div>
-
-        <!-- About Content -->
-        <div class="about-layout">
-
-          <!-- Left Content -->
-          <div class="about-description">
-
-            <p class="about-text">
-              Divisi pendataan Hifest merupakan tim yang
-              berfokus pada pengumpulan, pengolahan,
-              validasi, dan penyajian data peserta,
-              perlombaan, serta laporan kegiatan.
-            </p>
-
-            <p class="about-text">
-              Kami membangun sistem kerja yang rapi dan
-              terstruktur untuk membantu seluruh rangkaian
-              acara berjalan lebih efektif dan terorganisir.
-            </p>
-
+          <div class="job-icon">
+            📈
           </div>
 
-          <!-- Right Content -->
-          <div class="about-profile-wrapper">
+          <h3>Penyusunan Statistik</h3>
 
-            <!-- Profile Item -->
-            <div class="profile-item">
-              <h3 class="profile-title">Vision</h3>
-              <p class="profile-description">
-                Menjadi pusat pengelolaan data Hifest yang
-                cepat, akurat, dan modern.
-              </p>
-            </div>
-
-            <!-- Profile Item -->
-            <div class="profile-item">
-              <h3 class="profile-title">Mission</h3>
-              <p class="profile-description">
-                Membangun sistem pendataan yang efisien,
-                transparan, dan mudah digunakan oleh seluruh panitia.
-              </p>
-            </div>
-
-          </div>
+          <p>
+            Managing participant quota monitoring,
+            recap dashboards, real-time statistics,
+            and data synchronization across all
+            HI-FEST 2026 competition clusters.
+          </p>
 
         </div>
 
@@ -148,209 +221,57 @@
 
     </section>
 
-    <!-- ========================================
-         SECTION 3 : TIMELINE
-    ========================================= -->
-    <section id="timeline-section" class="page-section">
+    <!-- ========================= -->
+    <!-- UPDATE DATA -->
+    <!-- ========================= -->
 
-      <div class="section-container">
+    <section id="update-data" class="panel update-panel">
 
-        <!-- Section Heading -->
-        <div class="section-heading">
-          <span class="section-subtitle">Schedule Flow</span>
-          <h2 class="section-title">Our Timeline</h2>
-        </div>
-
-        <!-- Timeline List -->
-        <div class="timeline-wrapper">
-
-          <ul class="timeline-list">
-
-            <!-- Timeline Item -->
-            <li class="timeline-item">
-
-              <div class="timeline-date">
-                01 July 2026
-              </div>
-
-              <div class="timeline-content">
-                <h3 class="timeline-title">
-                  Open Registration
-                </h3>
-
-                <p class="timeline-description">
-                  Pembukaan pendaftaran peserta Hifest.
-                </p>
-              </div>
-
-            </li>
-
-            <!-- Timeline Item -->
-            <li class="timeline-item">
-
-              <div class="timeline-date">
-                10 July 2026
-              </div>
-
-              <div class="timeline-content">
-                <h3 class="timeline-title">
-                  Data Verification
-                </h3>
-
-                <p class="timeline-description">
-                  Validasi data peserta dan pembagian kategori lomba.
-                </p>
-              </div>
-
-            </li>
-
-            <!-- Timeline Item -->
-            <li class="timeline-item">
-
-              <div class="timeline-date">
-                15 July 2026
-              </div>
-
-              <div class="timeline-content">
-                <h3 class="timeline-title">
-                  Final Recap
-                </h3>
-
-                <p class="timeline-description">
-                  Finalisasi seluruh data kegiatan dan peserta.
-                </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </div>
-
+      <div class="section-header">
+        <span>MONITORING</span>
+        <h2>Update Data</h2>
       </div>
 
-    </section>
+      <div class="dashboard-container">
 
-    <!-- ========================================
-         SECTION 4 : OUR JOB
-    ========================================= -->
-    <section id="job-section" class="page-section">
+        <!-- CARD 1 -->
 
-      <div class="section-container">
+        <div class="tracking-card">
 
-        <!-- Section Heading -->
-        <div class="section-heading">
-          <span class="section-subtitle">Division Activity</span>
-          <h2 class="section-title">Our Job</h2>
-        </div>
-
-        <!-- Job Cards -->
-        <div class="job-card-container">
-
-          <!-- Job Card -->
-          <article class="job-card">
-
-            <div class="job-card-header">
-              <h3 class="job-title">
-                Participant Data
-              </h3>
-            </div>
-
-            <div class="job-card-body">
-              <p class="job-description">
-                Mengelola dan merekap data peserta secara terstruktur.
-              </p>
-            </div>
-
-          </article>
-
-          <!-- Job Card -->
-          <article class="job-card">
-
-            <div class="job-card-header">
-              <h3 class="job-title">
-                Data Validation
-              </h3>
-            </div>
-
-            <div class="job-card-body">
-              <p class="job-description">
-                Memastikan data yang masuk valid dan sesuai format.
-              </p>
-            </div>
-
-          </article>
-
-          <!-- Job Card -->
-          <article class="job-card">
-
-            <div class="job-card-header">
-              <h3 class="job-title">
-                Reporting System
-              </h3>
-            </div>
-
-            <div class="job-card-body">
-              <p class="job-description">
-                Menyusun laporan data harian dan statistik kegiatan.
-              </p>
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================================
-         SECTION 5 : UPDATE DATA
-    ========================================= -->
-    <section id="update-section" class="page-section">
-
-      <div class="section-container">
-
-        <!-- Section Heading -->
-        <div class="section-heading">
-          <span class="section-subtitle">Realtime Statistics</span>
-          <h2 class="section-title">Update Data</h2>
-        </div>
-
-        <!-- Data Summary -->
-        <div class="data-summary-wrapper">
-
-          <!-- Summary Item -->
-          <div class="summary-card">
-            <h3 class="summary-title">Total Participants</h3>
-            <p class="summary-value">0</p>
+          <div class="tracking-header">
+            <h3>Klaster Pendidikan (Dispendik)</h3>
+            <span>72%</span>
           </div>
 
-          <!-- Summary Item -->
-          <div class="summary-card">
-            <h3 class="summary-title">Active Competitions</h3>
-            <p class="summary-value">0</p>
+          <div class="tracking-number">
+            1,248
           </div>
 
-          <!-- Summary Item -->
-          <div class="summary-card">
-            <h3 class="summary-title">Verified Data</h3>
-            <p class="summary-value">0</p>
+          <p>Total validated participants</p>
+
+          <div class="progress-bar">
+            <div class="progress-fill progress-72"></div>
           </div>
 
         </div>
 
-        <!-- Chart Container -->
-        <div class="chart-section">
+        <!-- CARD 2 -->
 
-          <div class="chart-header">
-            <h3 class="chart-title">
-              Registration Statistics
-            </h3>
+        <div class="tracking-card">
+
+          <div class="tracking-header">
+            <h3>Klaster Olahraga (Dispora)</h3>
+            <span>54%</span>
           </div>
 
-          <div class="chart-container">
-            <!-- Container kosong untuk chart / grafik -->
+          <div class="tracking-number">
+            824
+          </div>
+
+          <p>Total validated participants</p>
+
+          <div class="progress-bar">
+            <div class="progress-fill progress-54"></div>
           </div>
 
         </div>
@@ -360,6 +281,9 @@
     </section>
 
   </main>
+
+  <!-- JS -->
+  <script src="script.js"></script>
 
 </body>
 </html>
