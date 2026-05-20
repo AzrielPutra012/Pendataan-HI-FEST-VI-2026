@@ -1,289 +1,1729 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>HI-FEST 2026 | Internal Portal</title>
-
-  <!-- Google Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divisi Pendataan — HI-FEST 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'luna-base':  '#011C40',
+            'luna-card':  '#023859',
+            'luna-teal':  '#54ACBF',
+            'luna-sky':   '#A7EBF2',
+            'luna-ocean': '#26658C',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+            mono:    ['"Space Mono"', 'monospace'],
+          },
+          borderRadius: {
+            '2xl': '1rem',
+            '3xl': '1.5rem',
+            '4xl': '2rem',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* ═══════════════════════════════════════════════════
+       LUNA PALETTE — CSS Variables
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --luna-base:    #011C40;
+      --luna-card:    #023859;
+      --luna-teal:    #54ACBF;
+      --luna-sky:     #A7EBF2;
+      --luna-ocean:   #26658C;
+      --neu-light:    rgba(167, 235, 242, 0.06);
+      --neu-dark:     rgba(0, 8, 20, 0.55);
+      --neu-shadow:   4px 4px 10px var(--neu-dark), -3px -3px 8px var(--neu-light);
+      --neu-shadow-inset: inset 3px 3px 7px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
+      --neu-shadow-sm: 3px 3px 7px var(--neu-dark), -2px -2px 5px var(--neu-light);
+    }
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet"
-  />
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--luna-base);
+      color: var(--luna-sky);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+    /* ═══════════════════════════════════════════════════
+       GLOBAL DECORATIVE LAYER — Aurora, Waves, Particles
+       Semua elemen ini z-index negatif, pointer-events: none
+    ═══════════════════════════════════════════════════ */
+
+    /* ─── Aurora Container (fixed, behind everything) ─── */
+    .aurora-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Aurora 1 — Electric Sky Blue di kiri atas (area teks hero) */
+    .aurora-1 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      top: -80px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(167, 235, 242, 0.10) 0%, transparent 65%);
+      filter: blur(120px);
+      border-radius: 50%;
+      animation: auroraFloat1 14s ease-in-out infinite;
+    }
+
+    /* Aurora 2 — Teal Blue di pojok kanan bawah */
+    .aurora-2 {
+      position: absolute;
+      width: 550px;
+      height: 550px;
+      bottom: -100px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(84, 172, 191, 0.12) 0%, transparent 65%);
+      filter: blur(130px);
+      border-radius: 50%;
+      animation: auroraFloat2 18s ease-in-out infinite reverse;
+    }
+
+    /* Aurora 3 — Ocean Blue di tengah (subtle) */
+    .aurora-3 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      top: 45%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(38, 101, 140, 0.09) 0%, transparent 65%);
+      filter: blur(100px);
+      border-radius: 50%;
+      animation: auroraFloat3 22s ease-in-out infinite 3s;
+    }
+
+    @keyframes auroraFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(40px, -30px) scale(1.08); }
+      66%       { transform: translate(-20px, 20px) scale(0.95); }
+    }
+    @keyframes auroraFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40%       { transform: translate(-50px, 30px) scale(1.1); }
+      70%       { transform: translate(25px, -20px) scale(0.92); }
+    }
+    @keyframes auroraFloat3 {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+      50%       { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    }
+
+    /* ─── SVG Wave Layer (per-section, absolute) ─── */
+    .wave-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* ─── Floating Particles ─── */
+    .particles-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: #A7EBF2;
+    }
+
+    /* Slow pulse variants */
+    @keyframes particlePulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50%       { opacity: 0.55; transform: scale(1.3); }
+    }
+    @keyframes particleDrift {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+      50%       { transform: translateY(-12px) scale(1.1); opacity: 0.45; }
+    }
+    @keyframes particleTwinkle {
+      0%, 100% { opacity: 0.08; }
+      50%       { opacity: 0.5; }
+    }
+
+    .p-pulse  { animation: particlePulse  4s ease-in-out infinite; }
+    .p-drift  { animation: particleDrift  6s ease-in-out infinite; }
+    .p-twinkle{ animation: particleTwinkle 3s ease-in-out infinite; }
+
+    /* ═══════════════════════════════════════════════════
+       TOP NAVBAR
+    ═══════════════════════════════════════════════════ */
+    .navbar {
+      background: rgba(2, 56, 89, 0.55);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border-bottom: 1px solid rgba(167, 235, 242, 0.07);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(1, 28, 64, 0.85);
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+    }
+    .logo-badge {
+      width: 38px; height: 38px;
+      background: var(--luna-card);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--neu-shadow);
+      flex-shrink: 0;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .logo-badge:hover {
+      box-shadow: 6px 6px 14px var(--neu-dark), -4px -4px 10px var(--neu-light);
+      transform: translateY(-1px);
+    }
+    .nav-link {
+      position: relative;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: rgba(167, 235, 242, 0.55);
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease, background 0.3s ease;
+      overflow: hidden;
+    }
+    .nav-link::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50px;
+      background: rgba(167, 235, 242, 0.06);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { color: var(--luna-sky); }
+    .nav-link:hover::before { opacity: 1; }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: 4px; left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 60%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--luna-teal), transparent);
+      border-radius: 2px;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after { transform: translateX(-50%) scaleX(1); }
+    .nav-link.active {
+      color: var(--luna-sky);
+      background: rgba(167, 235, 242, 0.06);
+    }
+    .ham-bar {
+      display: block; width: 18px; height: 1.5px;
+      background: var(--luna-sky); border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .mobile-menu {
+      background: rgba(2, 56, 89, 0.97);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(167, 235, 242, 0.07);
+      animation: slideDown 0.25s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mob-link {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500;
+      color: rgba(167, 235, 242, 0.6);
+      text-decoration: none;
+      padding: 10px 14px; border-radius: 10px;
+      transition: color 0.25s, background 0.25s;
+    }
+    .mob-link:hover { color: var(--luna-sky); background: rgba(167, 235, 242, 0.07); }
+
+    /* ═══════════════════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════════════════ */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    /* Orbs (hero-specific, complementary to aurora) */
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1; }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(84, 172, 191, 0.10) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      animation: orbFloat 9s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(38, 101, 140, 0.15) 0%, transparent 70%);
+      bottom: 50px; left: -80px;
+      animation: orbFloat 12s ease-in-out infinite reverse;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(167, 235, 242, 0.05) 0%, transparent 70%);
+      top: 50%; left: 40%;
+      animation: orbFloat 7s ease-in-out infinite 2s;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.05); }
+    }
+    .hero-section > .max-w-7xl { position: relative; z-index: 2; }
+
+    /* ─── Badge Pill ─── */
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px 6px 8px;
+      background: var(--luna-card);
+      border: 1px solid rgba(167, 235, 242, 0.1);
+      border-radius: 50px;
+      box-shadow: var(--neu-shadow-sm);
+      width: fit-content;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--luna-teal);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--luna-teal);
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 6px var(--luna-teal); }
+      50%       { box-shadow: 0 0 16px var(--luna-teal), 0 0 28px rgba(84,172,191,0.3); }
+    }
+
+    /* ─── H1 Bonjour ─── */
+    .headline-wrap { animation: fadeInUp 0.6s ease 0.2s both; }
+    .bonjour-text {
+      display: block;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 700; line-height: 1;
+      background: linear-gradient(135deg, var(--luna-sky) 0%, rgba(167, 235, 242, 0.55) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+    }
+    .bonjour-accent {
+      color: var(--luna-teal); font-size: clamp(4rem, 9vw, 7.5rem); line-height: 1;
+      -webkit-text-fill-color: var(--luna-teal);
+    }
+    .subtitle-block { animation: fadeInUp 0.6s ease 0.3s both; }
+    .quote-card {
+      display: flex; gap: 16px;
+      background: rgba(2, 56, 89, 0.45);
+      border: 1px solid rgba(167, 235, 242, 0.08);
+      border-radius: 16px; padding: 20px 22px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--neu-shadow), inset 0 1px 0 rgba(167, 235, 242, 0.06);
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+    .quote-bar {
+      width: 3px; border-radius: 4px;
+      background: linear-gradient(180deg, var(--luna-teal), transparent);
+      flex-shrink: 0;
+    }
+    .quote-content { flex: 1; }
+    .quote-mark {
+      font-size: 2.5rem; line-height: 1;
+      color: rgba(84, 172, 191, 0.3);
+      display: block; margin-bottom: -8px;
+    }
+    .cta-row { animation: fadeInUp 0.6s ease 0.5s both; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px;
+      background: linear-gradient(135deg, var(--luna-teal), var(--luna-ocean));
+      color: var(--luna-base);
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      text-decoration: none; border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(84, 172, 191, 0.25), var(--neu-shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(84, 172, 191, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 11px 20px;
+      border: 1px solid rgba(167, 235, 242, 0.2);
+      color: rgba(167, 235, 242, 0.65);
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+      text-decoration: none; border-radius: 50px;
+      background: rgba(167, 235, 242, 0.04);
+      transition: color 0.25s, border-color 0.25s, background 0.25s;
+      letter-spacing: 0.02em;
+    }
+    .btn-ghost:hover {
+      color: var(--luna-sky);
+      border-color: rgba(167, 235, 242, 0.4);
+      background: rgba(167, 235, 242, 0.08);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       BENTO CARD
+    ═══════════════════════════════════════════════════ */
+    .hero-right { animation: fadeInRight 0.7s ease 0.35s both; }
+    .bento-card {
+      background: linear-gradient(145deg, rgba(2, 56, 89, 0.9), rgba(1, 35, 70, 0.95));
+      border: 1px solid rgba(167, 235, 242, 0.10);
+      border-radius: 28px; padding: 28px;
+      box-shadow:
+        12px 12px 30px rgba(0, 6, 18, 0.6),
+        -6px -6px 18px rgba(167, 235, 242, 0.04),
+        inset 0 1px 0 rgba(167, 235, 242, 0.07),
+        inset 0 -1px 0 rgba(0,0,0,0.3);
+      backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .bento-header { display: flex; align-items: center; justify-content: space-between; }
+    .neu-icon-sm {
+      width: 32px; height: 32px;
+      background: var(--luna-card); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--neu-shadow-sm);
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      background: rgba(84, 172, 191, 0.08);
+      border: 1px solid rgba(84, 172, 191, 0.2);
+      border-radius: 50px;
+    }
+    .pulse-dot {
+      width: 6px; height: 6px;
+      background: var(--luna-teal); border-radius: 50%;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    .chart-placeholder {
+      background: rgba(1, 20, 48, 0.5);
+      border: 1px dashed rgba(167, 235, 242, 0.1);
+      border-radius: 18px; min-height: 220px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      padding: 24px 20px 16px; gap: 16px;
+      box-shadow: var(--neu-shadow-inset);
+    }
+    .stat-display { text-align: center; }
+    .stat-number {
+      font-size: 3rem; font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1;
+      background: linear-gradient(135deg, var(--luna-sky), rgba(167, 235, 242, 0.5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .fake-chart { width: 100%; }
+    .chart-bars {
+      display: flex; align-items: flex-end;
+      justify-content: center; gap: 6px; height: 60px;
+    }
+    .bar {
+      flex: 1; height: var(--h);
+      background: linear-gradient(180deg, rgba(38, 101, 140, 0.6), rgba(2, 56, 89, 0.3));
+      border-radius: 4px 4px 2px 2px;
+      border: 1px solid rgba(167, 235, 242, 0.06);
+      transition: background 0.3s ease;
+      animation: barRise 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    .bar:nth-child(1){animation-delay:0.5s} .bar:nth-child(2){animation-delay:0.6s}
+    .bar:nth-child(3){animation-delay:0.65s} .bar:nth-child(4){animation-delay:0.7s}
+    .bar:nth-child(5){animation-delay:0.75s} .bar:nth-child(6){animation-delay:0.8s}
+    .bar:nth-child(7){animation-delay:0.85s} .bar:nth-child(8){animation-delay:0.9s}
+    .bar.active {
+      background: linear-gradient(180deg, rgba(84, 172, 191, 0.55), rgba(38, 101, 140, 0.25));
+      border-color: rgba(84, 172, 191, 0.25);
+      box-shadow: 0 0 12px rgba(84, 172, 191, 0.15);
+    }
+    .bar:hover { background: linear-gradient(180deg, rgba(84, 172, 191, 0.7), rgba(38, 101, 140, 0.3)); cursor: default; }
+    @keyframes barRise {
+      from { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+      to   { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    }
+    .chart-baseline {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167, 235, 242, 0.15), transparent);
+      margin-top: 4px; border-radius: 2px;
+    }
+    .mini-stats {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(1, 20, 48, 0.4);
+      border: 1px solid rgba(167, 235, 242, 0.07);
+      border-radius: 14px; padding: 14px 20px;
+      box-shadow: var(--neu-shadow-inset);
+    }
+    .mini-stat { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+    .mini-stat-val { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; }
+    .mini-stat-label {
+      font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 400;
+      color: rgba(167, 235, 242, 0.35);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .mini-stat-divider { width: 1px; height: 32px; background: rgba(167, 235, 242, 0.1); }
+    .neu-icon {
+      width: 40px; height: 40px;
+      background: var(--luna-card); border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--neu-shadow); cursor: pointer;
+      border: none; outline: none;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+    .neu-icon:hover { box-shadow: 6px 6px 14px var(--neu-dark), -4px -4px 10px var(--neu-light); transform: translateY(-1px); }
+    .neu-icon:active { box-shadow: var(--neu-shadow-inset); transform: translateY(0); }
+
+    /* ═══════════════════════════════════════════════════
+       ENTRANCE ANIMATIONS
+    ═══════════════════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       ABOUT SECTION
+    ═══════════════════════════════════════════════════ */
+    .about-section { position: relative; background: transparent; z-index: 1; }
+
+    [data-aos="fadeInUp"] {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    [data-aos="fadeInUp"].aos-visible { opacity: 1; transform: translateY(0); }
+    [data-aos-delay="100"].aos-visible { transition-delay: 0.10s; }
+    [data-aos-delay="150"].aos-visible { transition-delay: 0.15s; }
+    [data-aos-delay="200"].aos-visible { transition-delay: 0.20s; }
+    .col-label { margin-bottom: 4px; }
+
+    .timeline-track {
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      padding-bottom: 12px; cursor: grab;
+    }
+    .timeline-track:active { cursor: grabbing; }
+    .timeline-track::-webkit-scrollbar { display: none; }
+    .timeline-track { -ms-overflow-style: none; scrollbar-width: none; }
+    .timeline-inner { display: flex; gap: 14px; width: max-content; padding: 4px 4px 8px 4px; }
+
+    .timeline-card {
+      scroll-snap-align: start; flex-shrink: 0; width: 190px;
+      background: rgba(2, 56, 89, 0.55);
+      border: 1px solid rgba(167, 235, 242, 0.08);
+      border-radius: 18px; padding: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 5px 5px 14px rgba(0, 6, 18, 0.5), -3px -3px 8px rgba(167, 235, 242, 0.035);
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .timeline-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 8px 10px 22px rgba(0, 6, 18, 0.6), -4px -4px 12px rgba(167, 235, 242, 0.05);
+      border-color: rgba(84, 172, 191, 0.2);
+    }
+    .active-card {
+      border: 1px solid rgba(167, 235, 242, 0.35);
+      background: linear-gradient(145deg, rgba(2, 56, 89, 0.85), rgba(1, 35, 70, 0.9));
+      box-shadow: 5px 5px 14px rgba(0, 6, 18, 0.55), -3px -3px 8px rgba(167, 235, 242, 0.06), 0 0 24px rgba(167, 235, 242, 0.06);
+    }
+    .active-card:hover {
+      border-color: rgba(167, 235, 242, 0.5);
+      box-shadow: 8px 10px 22px rgba(0, 6, 18, 0.65), -4px -4px 12px rgba(167, 235, 242, 0.07), 0 0 36px rgba(167, 235, 242, 0.08);
+    }
+    .tl-card-glow {
+      position: absolute; top: -40%; right: -30%;
+      width: 130px; height: 130px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(167, 235, 242, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tl-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .tl-number { font-size: 10px; color: rgba(167, 235, 242, 0.2); letter-spacing: 0.05em; }
+    .tl-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 50px;
+      font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.04em;
+    }
+    .tl-badge-active { background: rgba(84, 172, 191, 0.15); border: 1px solid rgba(84, 172, 191, 0.35); color: var(--luna-teal); }
+    .tl-badge-upcoming { background: rgba(167, 235, 242, 0.05); border: 1px solid rgba(167, 235, 242, 0.1); color: rgba(167, 235, 242, 0.4); }
+    .tl-badge-dot { width: 5px; height: 5px; background: var(--luna-teal); border-radius: 50%; animation: pulseDot 2s ease-in-out infinite; }
+    .tl-card-body { display: flex; flex-direction: column; gap: 8px; }
+    .tl-icon-wrap {
+      width: 34px; height: 34px;
+      background: var(--luna-card); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--neu-shadow-sm);
+    }
+    .active-icon {
+      background: rgba(2, 56, 89, 0.9);
+      box-shadow: 3px 3px 8px rgba(0, 6, 18, 0.55), -2px -2px 6px rgba(167, 235, 242, 0.06), 0 0 10px rgba(167, 235, 242, 0.08);
+    }
+    .tl-title { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--luna-sky); line-height: 1.3; }
+    .tl-date { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(84, 172, 191, 0.7); letter-spacing: 0.03em; }
+    .tl-progress-wrap { height: 2px; background: rgba(167, 235, 242, 0.07); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+    .tl-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--luna-teal), var(--luna-sky)); border-radius: 2px; transition: width 0.1s linear; }
+
+    .profile-card {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--luna-card);
+      border: 1px solid rgba(167, 235, 242, 0.07);
+      border-radius: 16px; padding: 14px 16px;
+      position: relative;
+      box-shadow: 6px 6px 16px rgba(0, 6, 18, 0.55), -3px -3px 9px rgba(167, 235, 242, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      overflow: hidden;
+    }
+    .profile-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 9px 9px 22px rgba(0, 6, 18, 0.65), -4px -4px 12px rgba(167, 235, 242, 0.055);
+      border-color: rgba(84, 172, 191, 0.18);
+    }
+    .profile-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--luna-card);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: inset 3px 3px 7px rgba(0, 6, 18, 0.55), inset -2px -2px 5px rgba(167, 235, 242, 0.06);
+    }
+    .profile-avatar span { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: var(--luna-sky); letter-spacing: 0.05em; }
+    .profile-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+    .profile-name { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--luna-sky); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .profile-role { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(167, 235, 242, 0.45); letter-spacing: 0.05em; text-transform: uppercase; }
+    .profile-kekel { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--luna-teal); }
+    .profile-badge-rank { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .rank-1 { background: rgba(167, 235, 242, 0.08); border: 1px solid rgba(167, 235, 242, 0.15); box-shadow: var(--neu-shadow-sm); }
+    .rank-2 { background: rgba(84, 172, 191, 0.08); border: 1px solid rgba(84, 172, 191, 0.15); box-shadow: var(--neu-shadow-sm); }
+
+    /* Accordion */
+    .accordion-item {
+      background: var(--luna-card);
+      border: 1px solid rgba(167, 235, 242, 0.07);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 5px 5px 14px rgba(0, 6, 18, 0.45), -3px -3px 8px rgba(167, 235, 242, 0.03);
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .accordion-item.open {
+      border-color: rgba(38, 101, 140, 0.45);
+      box-shadow: 5px 5px 16px rgba(0, 6, 18, 0.55), -3px -3px 8px rgba(167, 235, 242, 0.04), 0 0 20px rgba(38, 101, 140, 0.1);
+    }
+    .accordion-header {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; padding: 15px 18px;
+      background: var(--luna-card); border: none; cursor: pointer; gap: 12px;
+      transition: background 0.3s ease; outline: none;
+    }
+    .accordion-item.open .accordion-header { background: rgba(38, 101, 140, 0.35); }
+    .accordion-header:hover { background: rgba(167, 235, 242, 0.04); }
+    .accordion-item.open .accordion-header:hover { background: rgba(38, 101, 140, 0.4); }
+    .acc-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; text-align: left; }
+    .acc-num { font-size: 11px; font-weight: 700; color: rgba(84, 172, 191, 0.5); letter-spacing: 0.05em; flex-shrink: 0; width: 22px; text-align: center; transition: color 0.3s ease; }
+    .accordion-item.open .acc-num { color: var(--luna-teal); }
+    .acc-title-wrap { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .acc-title { font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600; color: rgba(167, 235, 242, 0.75); line-height: 1.3; transition: color 0.3s ease; }
+    .accordion-item.open .acc-title { color: var(--luna-sky); }
+    .acc-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(84, 172, 191, 0.5); letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.3s ease; }
+    .accordion-item.open .acc-tag { color: rgba(84, 172, 191, 0.8); }
+    .acc-chevron {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--luna-card);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: rgba(167, 235, 242, 0.35);
+      box-shadow: var(--neu-shadow-sm);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .accordion-item.open .acc-chevron { transform: rotate(180deg); color: var(--luna-teal); background: rgba(38, 101, 140, 0.4); box-shadow: var(--neu-shadow-inset); }
+    .accordion-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.38s cubic-bezier(0.4, 0, 0.2, 1); }
+    .accordion-item.open .accordion-body { grid-template-rows: 1fr; }
+    .acc-content { overflow: hidden; padding: 0 18px; display: flex; flex-direction: column; gap: 12px; }
+    .accordion-item.open .acc-content { padding: 4px 18px 18px; }
+    .acc-desc { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: rgba(167, 235, 242, 0.5); line-height: 1.7; }
+    .acc-indicator { background: rgba(1, 20, 48, 0.5); border: 1px solid rgba(167, 235, 242, 0.1); border-left: 3px solid var(--luna-sky); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+    .acc-indicator-label { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; color: var(--luna-sky); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+    .acc-indicator-text { font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 400; color: var(--luna-sky); line-height: 1.65; opacity: 0.85; }
+    .scroll-hint { animation: scrollHintPulse 2.5s ease-in-out infinite; }
+    @keyframes scrollHintPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+    /* ═══════════════════════════════════════════════════
+       ALL DATA SECTION
+    ═══════════════════════════════════════════════════ */
+    .alldata-section { position: relative; background: transparent; z-index: 1; }
+    .data-card { display: flex; flex-direction: column; gap: 18px; }
+    .data-card-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .last-updated-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--luna-card); border: 1px solid rgba(167, 235, 242, 0.08); border-radius: 12px; box-shadow: var(--neu-shadow-sm); }
+    .bento-mini-card {
+      background: linear-gradient(145deg, rgba(2, 56, 89, 0.9), rgba(1, 28, 64, 0.95));
+      border: 1px solid rgba(167, 235, 242, 0.09);
+      border-radius: 22px; padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      box-shadow: 8px 8px 22px rgba(0, 6, 18, 0.55), -4px -4px 12px rgba(167, 235, 242, 0.035), inset 0 1px 0 rgba(167, 235, 242, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .bento-mini-card:hover { transform: translateY(-3px); box-shadow: 10px 12px 28px rgba(0, 6, 18, 0.65), -5px -5px 15px rgba(167, 235, 242, 0.04); }
+    .mini-card-header { display: flex; align-items: center; gap: 10px; }
+    .ring-wrap { display: flex; justify-content: center; padding: 4px 0; }
+    .ring-container { position: relative; width: 100px; height: 100px; }
+    .ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring-bg { fill: none; stroke: rgba(167, 235, 242, 0.06); stroke-width: 7; }
+    .ring-sport { fill: none; stroke: #A7EBF2; stroke-width: 7; stroke-linecap: round; stroke-dasharray: 188.5; stroke-dashoffset: 188.5; transition: stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 6px rgba(167, 235, 242, 0.35)); }
+    .ring-edu { fill: none; stroke: #54ACBF; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 138.2; stroke-dashoffset: 138.2; transition: stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s; filter: drop-shadow(0 0 5px rgba(84, 172, 191, 0.3)); }
+    .ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+    .ring-total { font-size: 16px; font-weight: 700; color: var(--luna-sky); line-height: 1; letter-spacing: -0.03em; }
+    .ring-label { font-family: 'DM Sans', sans-serif; font-size: 9px; color: rgba(167, 235, 242, 0.35); text-transform: uppercase; letter-spacing: 0.1em; }
+    .ring-legend { display: flex; justify-content: space-around; gap: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .sport-dot { background: var(--luna-sky); box-shadow: 0 0 8px rgba(167,235,242,0.4); }
+    .edu-dot   { background: var(--luna-teal); box-shadow: 0 0 7px rgba(84,172,191,0.35); }
+    .legend-name { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(167, 235, 242, 0.45); }
+    .legend-val { font-size: 13px; font-weight: 700; line-height: 1; }
+    .sport-val { color: var(--luna-sky); } .edu-val { color: var(--luna-teal); }
+    .hbar-group { display: flex; flex-direction: column; gap: 14px; }
+    .hbar-item { display: flex; flex-direction: column; gap: 5px; }
+    .hbar-top { display: flex; align-items: center; justify-content: space-between; }
+    .hbar-label { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(167, 235, 242, 0.55); }
+    .hbar-val { font-size: 12px; font-weight: 700; }
+    .indep-val { color: var(--luna-sky); } .deleg-val { color: #7BC8A4; }
+    .hbar-track { height: 8px; background: rgba(167, 235, 242, 0.06); border-radius: 50px; overflow: hidden; box-shadow: var(--neu-shadow-inset); }
+    .hbar-fill { height: 100%; border-radius: 50px; transition: width 1.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .indep-fill { background: linear-gradient(90deg, rgba(167, 235, 242, 0.6), var(--luna-sky)); box-shadow: 0 0 10px rgba(167, 235, 242, 0.25); }
+    .deleg-fill { background: linear-gradient(90deg, rgba(123, 200, 164, 0.6), #7BC8A4); box-shadow: 0 0 10px rgba(123, 200, 164, 0.2); }
+    .hbar-pct { font-size: 10px; color: rgba(167, 235, 242, 0.3); align-self: flex-end; }
+    .hbar-total-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: rgba(1, 20, 48, 0.4); border: 1px solid rgba(167, 235, 242, 0.07); border-radius: 10px; margin-top: 4px; box-shadow: var(--neu-shadow-inset); }
+    .chart-legend-row { display: flex; gap: 12px; align-items: center; }
+    .chart-legend-item { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 10px; border-radius: 50px; }
+    .sport-legend { background: rgba(167, 235, 242, 0.08); border: 1px solid rgba(167, 235, 242, 0.2); color: var(--luna-sky); }
+    .edu-legend   { background: rgba(84, 172, 191, 0.08); border: 1px solid rgba(84, 172, 191, 0.2); color: var(--luna-teal); }
+    .hchart-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .hchart-row { display: grid; grid-template-columns: 148px 1fr; align-items: center; gap: 10px; }
+    .hchart-label { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(167, 235, 242, 0.6); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; }
+    .hchart-track { height: 26px; background: rgba(167, 235, 242, 0.04); border-radius: 6px; overflow: hidden; box-shadow: var(--neu-shadow-inset); }
+    .hchart-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .sport-bar { background: linear-gradient(90deg, rgba(38, 101, 140, 0.6), rgba(167, 235, 242, 0.75)); box-shadow: 2px 0 12px rgba(167, 235, 242, 0.2); }
+    .edu-bar   { background: linear-gradient(90deg, rgba(2, 56, 89, 0.6), rgba(84, 172, 191, 0.75)); box-shadow: 2px 0 12px rgba(84, 172, 191, 0.2); }
+    .hchart-val { font-size: 10px; font-weight: 700; color: rgba(1, 28, 64, 0.9); letter-spacing: 0.02em; white-space: nowrap; }
+    .vchart-wrap { display: flex; flex-direction: column; gap: 0; flex: 1; }
+    .vchart-area { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; height: 200px; padding: 0 4px; }
+    .vcol-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; height: 100%; justify-content: flex-end; }
+    .vcol-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; flex: 1; justify-content: flex-end; }
+    .vcol-val { font-size: 9px; font-weight: 700; color: rgba(167, 235, 242, 0.45); letter-spacing: 0.03em; }
+    .vcol-bar-bg { width: 100%; height: 100%; background: rgba(167, 235, 242, 0.04); border-radius: 6px 6px 2px 2px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; box-shadow: var(--neu-shadow-inset); }
+    .vcol-bar { width: 100%; border-radius: 5px 5px 0 0; transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .vcol-bar[data-mono="1"] { background: linear-gradient(180deg, rgba(38,101,140,0.65), rgba(2,56,89,0.3)); }
+    .vcol-bar[data-mono="2"] { background: linear-gradient(180deg, rgba(38,101,140,0.78), rgba(2,56,89,0.4)); }
+    .vcol-bar[data-mono="3"] { background: linear-gradient(180deg, rgba(84,172,191,0.55), rgba(38,101,140,0.35)); }
+    .vcol-bar[data-mono="4"] { background: linear-gradient(180deg, rgba(84,172,191,0.72), rgba(38,101,140,0.45)); }
+    .vcol-bar[data-mono="5"] { background: linear-gradient(180deg, rgba(167,235,242,0.75), rgba(84,172,191,0.5)); box-shadow: 0 -4px 14px rgba(167,235,242,0.18); }
+    .vcol-bar[data-mono="6"] { background: linear-gradient(180deg, rgba(167,235,242,0.55), rgba(84,172,191,0.4)); }
+    .vcol-bar[data-mono="7"] { background: linear-gradient(180deg, rgba(167,235,242,0.65), rgba(84,172,191,0.45)); }
+    .vcol-label { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(167, 235, 242, 0.4); text-align: center; letter-spacing: 0.03em; line-height: 1.3; }
+    .vchart-baseline { height: 1px; background: linear-gradient(90deg, transparent, rgba(167, 235, 242, 0.15), transparent); margin-top: 6px; border-radius: 2px; }
+
+    /* Table */
+    .table-controls { display: flex; align-items: center; gap: 10px; }
+    .search-wrap { flex: 1; position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; }
+    .search-input { width: 100%; background: rgba(1, 20, 48, 0.6); border: 1px solid rgba(167, 235, 242, 0.1); border-radius: 10px; padding: 8px 12px 8px 34px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(167, 235, 242, 0.8); outline: none; box-shadow: var(--neu-shadow-inset); transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+    .search-input::placeholder { color: rgba(167, 235, 242, 0.22); }
+    .search-input:focus { border-color: rgba(84, 172, 191, 0.35); box-shadow: var(--neu-shadow-inset), 0 0 0 2px rgba(84, 172, 191, 0.08); }
+    .sort-btn { display: flex; align-items: center; gap: 5px; padding: 8px 12px; background: var(--luna-card); border: 1px solid rgba(167, 235, 242, 0.08); border-radius: 10px; cursor: pointer; box-shadow: var(--neu-shadow-sm); transition: box-shadow 0.25s ease, background 0.25s ease; white-space: nowrap; outline: none; }
+    .sort-btn:hover { background: rgba(38, 101, 140, 0.3); box-shadow: 4px 4px 10px rgba(0,6,18,0.5), -2px -2px 6px rgba(167,235,242,0.04); }
+    .sort-btn:active { box-shadow: var(--neu-shadow-inset); }
+    .table-outer { display: flex; flex-direction: column; flex: 1; border: 1px solid rgba(167, 235, 242, 0.07); border-radius: 14px; overflow: hidden; box-shadow: var(--neu-shadow-inset); }
+    .table-head-row { display: grid; grid-template-columns: 36px 1fr 90px; align-items: center; padding: 9px 14px; background: rgba(38, 101, 140, 0.2); border-bottom: 1px solid rgba(167, 235, 242, 0.08); flex-shrink: 0; }
+    .th-no,.th-name,.th-total { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(84, 172, 191, 0.6); }
+    .th-total { text-align: right; }
+    .table-body-scroll { overflow-y: auto; max-height: 340px; flex: 1; }
+    .table-body-scroll::-webkit-scrollbar { width: 4px; }
+    .table-body-scroll::-webkit-scrollbar-track { background: transparent; }
+    .table-body-scroll::-webkit-scrollbar-thumb { background: rgba(38, 101, 140, 0.5); border-radius: 4px; }
+    .table-body-scroll::-webkit-scrollbar-thumb:hover { background: rgba(84, 172, 191, 0.5); }
+    .tr-row { display: grid; grid-template-columns: 36px 1fr 90px; align-items: center; padding: 9px 14px; transition: background 0.2s ease; cursor: default; }
+    .tr-row:nth-child(even) { background: rgba(167, 235, 242, 0.025); }
+    .tr-row:nth-child(odd) { background: transparent; }
+    .tr-row:hover { background: rgba(38, 101, 140, 0.18) !important; }
+    .tr-row.is-top { background: rgba(167, 235, 242, 0.06) !important; }
+    .tr-row.is-top .td-total { color: var(--luna-sky) !important; text-shadow: 0 0 12px rgba(167, 235, 242, 0.4); }
+    .td-no { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(167, 235, 242, 0.2); }
+    .td-name { font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 500; color: rgba(167, 235, 242, 0.65); padding-right: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .td-total-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .td-mini-bar { width: 60px; height: 3px; background: rgba(167, 235, 242, 0.07); border-radius: 3px; overflow: hidden; }
+    .td-mini-fill { height: 100%; background: linear-gradient(90deg, rgba(38, 101, 140, 0.6), rgba(84, 172, 191, 0.7)); border-radius: 3px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .td-total { font-size: 12px; font-weight: 700; color: rgba(167, 235, 242, 0.45); letter-spacing: 0.03em; }
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px 20px; grid-column: 1 / -1; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--luna-base); }
+    ::-webkit-scrollbar-thumb { background: var(--luna-ocean); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--luna-teal); }
+    ::selection { background: rgba(84, 172, 191, 0.3); color: var(--luna-sky); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-section { padding-top: 2rem; padding-bottom: 2rem; min-height: auto; }
+      .bento-card { padding: 22px; }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .top-grid { grid-template-columns: 1fr; }
+      .vchart-area { height: 160px; }
+    }
+    @media (max-width: 768px) {
+      .bonjour-text, .bonjour-accent { font-size: 4rem; }
+      .stat-number { font-size: 2.2rem; }
+      .bento-card { padding: 18px; gap: 16px; }
+      .hero-section { padding-bottom: 3rem; }
+      .timeline-card { width: 170px; }
+      .about-section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+      .profile-name { font-size: 12px; }
+    }
+    @media (max-width: 640px) {
+      .left-mini-grid { grid-template-columns: 1fr; }
+      .vchart-area { height: 140px; }
+      .vcol-label { font-size: 7px; }
+      .table-body-scroll { max-height: 280px; }
+      .hchart-row { grid-template-columns: 110px 1fr; }
+      .hchart-label { font-size: 11px; }
+    }
+    @media (max-width: 480px) { .timeline-card { width: 155px; } }
+  </style>
 </head>
-<body>
+<body class="bg-luna-base font-body overflow-x-hidden">
 
-  <!-- ========================= -->
-  <!-- NAVBAR -->
-  <!-- ========================= -->
+  <!-- ═══════════════════════════════════════════════════
+       GLOBAL AURORA LAYER (fixed, behind everything)
+  ═══════════════════════════════════════════════════ -->
+  <div class="aurora-layer" aria-hidden="true">
+    <div class="aurora-1"></div>
+    <div class="aurora-2"></div>
+    <div class="aurora-3"></div>
+  </div>
 
-  <header class="navbar">
-    <div class="logo">HIFEST 2026</div>
-
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About Us</a></li>
-        <li><a href="#timeline" class="nav-link">Our Timeline</a></li>
-        <li><a href="#job" class="nav-link">Our Job</a></li>
-        <li><a href="#update-data" class="nav-link">Update Data</a></li>
+  <!-- ═══════════════════════════════════════════════════
+       TOP NAVBAR
+  ═══════════════════════════════════════════════════ -->
+  <header id="navbar" class="navbar fixed top-0 left-0 right-0 z-50">
+    <nav class="nav-inner max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="logo-wrap flex items-center gap-3">
+        <div class="logo-badge neu-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#A7EBF2"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#54ACBF" opacity="0.7"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#54ACBF" opacity="0.7"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#A7EBF2" opacity="0.4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="logo-title font-display text-luna-sky text-sm font-bold leading-tight block">Divisi Pendataan</span>
+          <span class="logo-sub font-mono text-luna-teal text-[10px] tracking-widest uppercase">HI-FEST 2026</span>
+        </div>
+      </div>
+      <ul class="nav-menu hidden md:flex items-center gap-1">
+        <li><a href="#home"    class="nav-link active">Home</a></li>
+        <li><a href="#about"   class="nav-link">About Us</a></li>
+        <li><a href="#alldata" class="nav-link">All Data</a></li>
       </ul>
+      <button id="hamburger" class="md:hidden neu-icon flex flex-col gap-[5px] items-center justify-center w-10 h-10" aria-label="Toggle Menu">
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+      </button>
     </nav>
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden">
+      <ul class="flex flex-col px-6 py-4 gap-2">
+        <li><a href="#home"    class="mob-link">Home</a></li>
+        <li><a href="#about"   class="mob-link">About Us</a></li>
+        <li><a href="#alldata" class="mob-link">All Data</a></li>
+      </ul>
+    </div>
   </header>
 
-  <!-- ========================= -->
-  <!-- MAIN WRAPPER -->
-  <!-- ========================= -->
+  <!-- ═══════════════════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════════════════ -->
+  <main id="home" class="hero-section min-h-screen flex items-center pt-16">
 
-  <main class="horizontal-wrapper">
+    <!-- Orbs (hero-specific) -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
 
-    <!-- ========================= -->
-    <!-- HOME -->
-    <!-- ========================= -->
+    <!-- SVG Wave — Hero (asimetris, kanan bawah) -->
+    <div class="wave-layer" aria-hidden="true">
+      <svg class="absolute bottom-0 right-0 w-[70%] opacity-[0.07] pointer-events-none" viewBox="0 0 900 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="waveHero1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#26658C"/>
+            <stop offset="100%" stop-color="#54ACBF"/>
+          </linearGradient>
+        </defs>
+        <path d="M900,500 L900,120 C780,80 650,200 520,160 C390,120 280,20 150,60 C60,90 0,180 0,180 L0,500 Z" fill="url(#waveHero1)"/>
+        <path d="M900,500 L900,220 C800,180 680,300 550,260 C420,220 300,140 170,180 C80,210 0,300 0,300 L0,500 Z" fill="url(#waveHero1)" opacity="0.5"/>
+      </svg>
+      <!-- Blob top-left -->
+      <svg class="absolute top-0 left-0 w-[40%] opacity-[0.05] pointer-events-none" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blobHero" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#26658C"/>
+            <stop offset="100%" stop-color="#54ACBF"/>
+          </linearGradient>
+        </defs>
+        <path d="M300,50 C420,30 560,80 580,200 C600,320 520,440 400,480 C280,520 140,480 80,360 C20,240 60,100 160,60 C220,35 240,70 300,50 Z" fill="url(#blobHero)"/>
+      </svg>
+    </div>
 
-    <section id="home" class="panel home-panel">
+    <!-- Floating Particles — Hero -->
+    <div class="particles-layer" aria-hidden="true">
+      <div class="particle w-1 h-1 p-pulse"  style="top:18%;left:8%;animation-delay:0s;animation-duration:4.2s"></div>
+      <div class="particle w-1.5 h-1.5 p-drift" style="top:32%;left:22%;animation-delay:1.2s;animation-duration:6.8s"></div>
+      <div class="particle w-1 h-1 p-twinkle" style="top:55%;left:5%;animation-delay:0.5s;animation-duration:3.1s"></div>
+      <div class="particle w-2 h-2 p-drift"  style="top:70%;left:15%;animation-delay:2s;animation-duration:7.2s;opacity:0.25"></div>
+      <div class="particle w-1 h-1 p-pulse"  style="top:85%;left:28%;animation-delay:0.8s;animation-duration:4.8s"></div>
+      <div class="particle w-1.5 h-1.5 p-twinkle" style="top:12%;left:42%;animation-delay:1.8s;animation-duration:3.5s"></div>
+      <div class="particle w-1 h-1 p-drift"  style="top:45%;left:52%;animation-delay:0.3s;animation-duration:5.9s"></div>
+      <div class="particle w-2 h-2 p-pulse"  style="top:22%;left:75%;animation-delay:2.3s;animation-duration:4.5s;opacity:0.2"></div>
+      <div class="particle w-1 h-1 p-twinkle" style="top:65%;left:88%;animation-delay:1s;animation-duration:2.9s"></div>
+      <div class="particle w-1.5 h-1.5 p-drift" style="top:80%;left:95%;animation-delay:1.5s;animation-duration:6.4s"></div>
+      <div class="particle w-1 h-1 p-pulse"  style="top:38%;left:67%;animation-delay:0.7s;animation-duration:5.1s"></div>
+      <div class="particle w-1 h-1 p-twinkle" style="top:92%;left:55%;animation-delay:2.8s;animation-duration:3.7s"></div>
+    </div>
 
-      <div class="hero-content">
+    <div class="max-w-7xl mx-auto px-6 w-full">
+      <div class="hero-grid grid grid-cols-1 lg:grid-cols-[45fr_55fr] gap-10 lg:gap-16 items-center">
 
-        <span class="portal-tag">
-          INTERNAL PORTAL
-        </span>
-
-        <h1>
-          HI-FEST 2026 <br />
-          Data Management System
-        </h1>
-
-        <p>
-          Centralized internal platform for monitoring participant
-          validation, workflow tracking, timeline coordination,
-          and statistical reporting for HI-FEST 2026 operations.
-        </p>
-
-        <a href="#update-data" class="cta-button">
-          Open Statistics Dashboard
-        </a>
-
-      </div>
-
-    </section>
-
-    <!-- ========================= -->
-    <!-- ABOUT -->
-    <!-- ========================= -->
-
-    <section id="about" class="panel about-panel">
-
-      <div class="section-header">
-        <span>OUR TEAM</span>
-        <h2>About Us</h2>
-      </div>
-
-      <div class="team-grid">
-
-        <div class="team-card">
-          <div class="card-icon">👨‍💻</div>
-          <h3>Azriel Putra</h3>
-          <p>Lead Front-End Developer</p>
-        </div>
-
-        <div class="team-card">
-          <div class="card-icon">📊</div>
-          <h3>Zidan</h3>
-          <p>Database & Monitoring Staff</p>
-        </div>
-
-        <div class="team-card">
-          <div class="card-icon">⚙️</div>
-          <h3>Member 3</h3>
-          <p>System Coordination Officer</p>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================= -->
-    <!-- TIMELINE -->
-    <!-- ========================= -->
-
-    <section id="timeline" class="panel timeline-panel">
-
-      <div class="section-header">
-        <span>WORKFLOW</span>
-        <h2>Our Timeline</h2>
-      </div>
-
-      <div class="timeline-container">
-
-        <div class="timeline-item">
-          <div class="timeline-dot dot-1"></div>
-
-          <div class="timeline-content">
-            <h3>Phase 1: Sistem & Database</h3>
-            <p>
-              Setup initial participant system,
-              database architecture, and internal
-              monitoring workflow for all divisions.
-            </p>
+        <!-- KOLOM KIRI -->
+        <div class="hero-left flex flex-col gap-6">
+          <div class="badge-pill">
+            <span class="badge-dot"></span>
+            <span class="font-mono text-[11px] text-luna-sky tracking-widest uppercase">Live Dashboard · 2026</span>
+          </div>
+          <div class="headline-wrap">
+            <h1 class="font-display text-luna-sky leading-none select-none">
+              <span class="bonjour-text">Bonjour</span>
+              <span class="bonjour-accent">.</span>
+            </h1>
+          </div>
+          <div class="subtitle-block">
+            <p class="font-body font-light text-luna-sky/60 text-xs tracking-[0.25em] uppercase mb-1">Dashboard Internal</p>
+            <h2 class="font-body font-medium text-luna-teal text-lg lg:text-xl leading-snug">
+              Divisi Pendataan<br/>
+              <span class="text-luna-sky/80">HI-FEST 2026</span>
+            </h2>
+          </div>
+          <div class="quote-card">
+            <div class="quote-bar" aria-hidden="true"></div>
+            <div class="quote-content">
+              <span class="quote-mark font-display">&ldquo;</span>
+              <p class="font-display italic text-luna-sky/90 text-base lg:text-lg leading-relaxed">
+                Data bukan hanya sekedar angka,<br/>
+                tapi selalu ada cerita<br/>
+                <span class="text-luna-teal not-italic font-bold">dibaliknya.</span>
+              </p>
+            </div>
+          </div>
+          <div class="cta-row flex items-center gap-4 mt-2">
+            <a href="#alldata" class="btn-primary">
+              <span>See All Data</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#about" class="btn-ghost">About Us</a>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-dot dot-2"></div>
-
-          <div class="timeline-content">
-            <h3>Phase 2: Validasi Harian</h3>
-            <p>
-              Daily verification process including
-              document checking, participant validation,
-              and quota synchronization.
-            </p>
+        <!-- KOLOM KANAN: Bento Box Card -->
+        <div class="hero-right">
+          <div class="bento-card">
+            <div class="bento-header">
+              <div class="flex items-center gap-3">
+                <div class="neu-icon-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                </div>
+                <div>
+                  <p class="font-mono text-luna-sky text-[11px] tracking-widest uppercase">Statistik Utama</p>
+                  <p class="font-body text-luna-sky/50 text-[10px]">Total Pendaftar — Realtime</p>
+                </div>
+              </div>
+              <div class="status-badge">
+                <span class="pulse-dot"></span>
+                <span class="font-mono text-[10px] text-luna-teal">LIVE</span>
+              </div>
+            </div>
+            <div class="chart-placeholder">
+              <div class="stat-display">
+                <p class="font-mono text-luna-sky/30 text-xs tracking-widest uppercase mb-2">Total Pendaftar</p>
+                <div class="stat-number font-display text-luna-sky">
+                  <span class="counter" data-target="0">102</span>
+                </div>
+                <p class="font-body text-luna-teal/70 text-xs mt-1">Grafik akan ditampilkan di sini</p>
+              </div>
+              <div class="fake-chart" aria-hidden="true">
+                <div class="chart-bars">
+                  <div class="bar" style="--h:35%"></div>
+                  <div class="bar" style="--h:55%"></div>
+                  <div class="bar" style="--h:40%"></div>
+                  <div class="bar" style="--h:75%"></div>
+                  <div class="bar" style="--h:60%"></div>
+                  <div class="bar" style="--h:85%"></div>
+                  <div class="bar active" style="--h:95%"></div>
+                  <div class="bar" style="--h:70%"></div>
+                </div>
+                <div class="chart-baseline"></div>
+                <p class="chart-label font-mono text-luna-sky/25 text-[9px] text-center mt-2 tracking-widest">CHART AREA · READY FOR INTEGRATION</p>
+              </div>
+            </div>
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <span class="mini-stat-val font-mono text-luna-sky">98</span>
+                <span class="mini-stat-label">Verified</span>
+              </div>
+              <div class="mini-stat-divider"></div>
+              <div class="mini-stat">
+                <span class="mini-stat-val font-mono text-luna-teal">0</span>
+                <span class="mini-stat-label">Pending</span>
+              </div>
+              <div class="mini-stat-divider"></div>
+              <div class="mini-stat">
+                <span class="mini-stat-val font-mono text-luna-sky/60">375</span>
+                <span class="mini-stat-label">Total</span>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot dot-3"></div>
-
-          <div class="timeline-content">
-            <h3>Phase 3: Finalisasi Data</h3>
-            <p>
-              Final reporting, statistical recap,
-              participant confirmation, and archival
-              process before event execution.
-            </p>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================= -->
-    <!-- JOB -->
-    <!-- ========================= -->
-
-    <section id="job" class="panel job-panel">
-
-      <div class="section-header">
-        <span>RESPONSIBILITIES</span>
-        <h2>Our Job</h2>
-      </div>
-
-      <div class="job-grid">
-
-        <div class="job-card">
-
-          <div class="job-icon">
-            📁
-          </div>
-
-          <h3>Validasi Berkas</h3>
-
-          <p>
-            Responsible for validating participant
-            administrative documents, checking
-            submission completeness, and ensuring
-            all uploaded data complies with internal
-            event regulations and operational standards.
-          </p>
-
-        </div>
-
-        <div class="job-card">
-
-          <div class="job-icon">
-            📈
-          </div>
-
-          <h3>Penyusunan Statistik</h3>
-
-          <p>
-            Managing participant quota monitoring,
-            recap dashboards, real-time statistics,
-            and data synchronization across all
-            HI-FEST 2026 competition clusters.
-          </p>
-
         </div>
 
       </div>
-
-    </section>
-
-    <!-- ========================= -->
-    <!-- UPDATE DATA -->
-    <!-- ========================= -->
-
-    <section id="update-data" class="panel update-panel">
-
-      <div class="section-header">
-        <span>MONITORING</span>
-        <h2>Update Data</h2>
-      </div>
-
-      <div class="dashboard-container">
-
-        <!-- CARD 1 -->
-
-        <div class="tracking-card">
-
-          <div class="tracking-header">
-            <h3>Klaster Pendidikan (Dispendik)</h3>
-            <span>72%</span>
-          </div>
-
-          <div class="tracking-number">
-            1,248
-          </div>
-
-          <p>Total validated participants</p>
-
-          <div class="progress-bar">
-            <div class="progress-fill progress-72"></div>
-          </div>
-
-        </div>
-
-        <!-- CARD 2 -->
-
-        <div class="tracking-card">
-
-          <div class="tracking-header">
-            <h3>Klaster Olahraga (Dispora)</h3>
-            <span>54%</span>
-          </div>
-
-          <div class="tracking-number">
-            824
-          </div>
-
-          <p>Total validated participants</p>
-
-          <div class="progress-bar">
-            <div class="progress-fill progress-54"></div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
+    </div>
   </main>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <!-- ═══════════════════════════════════════════════════
+       ABOUT SECTION
+  ═══════════════════════════════════════════════════ -->
+  <section id="about" class="about-section py-20 px-6">
 
+    <!-- SVG Wave — About (kiri) -->
+    <div class="wave-layer" aria-hidden="true">
+      <svg class="absolute top-0 left-0 w-[55%] h-full opacity-[0.06] pointer-events-none" viewBox="0 0 700 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="waveAbout" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#26658C"/>
+            <stop offset="100%" stop-color="#54ACBF"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,0 L0,900 C80,860 120,750 100,620 C80,490 20,400 40,280 C60,160 140,80 160,0 Z" fill="url(#waveAbout)"/>
+        <path d="M0,0 L0,900 C160,880 200,760 180,630 C160,500 100,380 120,250 C140,120 220,40 240,0 Z" fill="url(#waveAbout)" opacity="0.4"/>
+      </svg>
+      <!-- Blob kanan bawah about -->
+      <svg class="absolute bottom-10 right-0 w-[35%] opacity-[0.05] pointer-events-none" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blobAbout" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#54ACBF"/>
+            <stop offset="100%" stop-color="#26658C"/>
+          </linearGradient>
+        </defs>
+        <path d="M250,30 C360,10 470,90 490,210 C510,330 440,430 320,470 C200,510 80,460 40,340 C0,220 40,100 140,50 C180,30 200,50 250,30 Z" fill="url(#blobAbout)"/>
+      </svg>
+    </div>
+
+    <!-- Floating Particles — About -->
+    <div class="particles-layer" aria-hidden="true">
+      <div class="particle w-1.5 h-1.5 p-pulse"  style="top:5%;left:30%;animation-delay:0.4s;animation-duration:4.6s"></div>
+      <div class="particle w-1 h-1 p-twinkle" style="top:15%;left:55%;animation-delay:1.3s;animation-duration:3.2s"></div>
+      <div class="particle w-2 h-2 p-drift"   style="top:28%;left:80%;animation-delay:0.9s;animation-duration:7s;opacity:0.2"></div>
+      <div class="particle w-1 h-1 p-pulse"   style="top:50%;left:90%;animation-delay:2.1s;animation-duration:4.3s"></div>
+      <div class="particle w-1.5 h-1.5 p-twinkle" style="top:72%;left:70%;animation-delay:0.6s;animation-duration:3.8s"></div>
+      <div class="particle w-1 h-1 p-drift"   style="top:88%;left:40%;animation-delay:1.7s;animation-duration:6.2s"></div>
+      <div class="particle w-1 h-1 p-pulse"   style="top:60%;left:10%;animation-delay:2.5s;animation-duration:5.4s"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto flex flex-col gap-14" style="position:relative;z-index:2">
+
+      <!-- Section Header -->
+      <div class="section-header flex flex-col gap-3" data-aos="fadeInUp">
+        <div class="badge-pill w-fit">
+          <span class="badge-dot"></span>
+          <span class="font-mono text-[11px] text-luna-sky tracking-widest uppercase">About Us · Divisi Pendataan</span>
+        </div>
+        <h2 class="font-display text-luna-sky text-3xl lg:text-4xl font-bold leading-tight">
+          Siapa Kami<span class="text-luna-teal">?</span>
+        </h2>
+        <p class="font-body text-luna-sky/50 text-sm max-w-md leading-relaxed">
+          Divisi yang bertugas mengelola seluruh alur data peserta HI-FEST 2026 — dari pendaftaran hingga distribusi ID Card.
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline-section" data-aos="fadeInUp" data-aos-delay="100">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-3">
+            <div class="neu-icon-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <span class="font-mono text-luna-sky/80 text-xs tracking-widest uppercase">Lini Masa Kerja 2026</span>
+          </div>
+          <div class="scroll-hint hidden md:flex items-center gap-2">
+            <span class="font-body text-luna-sky/30 text-[11px]">Geser untuk lihat semua</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2" opacity="0.35"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="timeline-track" id="timeline-track">
+          <div class="timeline-inner">
+            <div class="timeline-card active-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-active"><span class="tl-badge-dot"></span>On Progress</span><span class="tl-number font-mono">#01</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap active-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><h3 class="tl-title">Rapat Akbar II</h3><p class="tl-date">20 Mei 2026</p></div>
+              <div class="tl-card-glow"></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#02</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 class="tl-title">Pendaftaran Batch 2</h3><p class="tl-date">22–26 Mei 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#03</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><h3 class="tl-title">Extra Time</h3><p class="tl-date">27–28 Mei 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#04</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div><h3 class="tl-title">Seleksi Berkas</h3><p class="tl-date">29 Mei 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#05</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div><h3 class="tl-title">Pengumuman Berkas</h3><p class="tl-date">30 Mei 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#06</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h3 class="tl-title">Registrasi Ulang</h3><p class="tl-date">3 Juni 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#07</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><h3 class="tl-title">Finalisasi Data</h3><p class="tl-date">4 Juni 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#08</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div><h3 class="tl-title">Pengumuman Reg Ulang</h3><p class="tl-date">5 Juni 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#09</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div><h3 class="tl-title">Pembuatan ID Card</h3><p class="tl-date">6–8 Juni 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#10</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3 class="tl-title">Distribusi ID Card</h3><p class="tl-date">27 Juni 2026</p></div>
+            </div>
+            <div class="timeline-card">
+              <div class="tl-card-top"><span class="tl-badge tl-badge-upcoming">Soon</span><span class="tl-number font-mono">#11</span></div>
+              <div class="tl-card-body"><div class="tl-icon-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#54ACBF" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 class="tl-title">Technical Meeting</h3><p class="tl-date">1 Juli 2026</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-progress-wrap"><div class="tl-progress-bar" id="tl-progress"></div></div>
+      </div>
+
+      <!-- Bottom Grid: Org + Accordion -->
+      <div class="bottom-grid grid grid-cols-1 lg:grid-cols-[40fr_60fr] gap-8 items-start">
+        <!-- Struktur Organisasi -->
+        <div class="org-col flex flex-col gap-5" data-aos="fadeInUp" data-aos-delay="150">
+          <div class="col-label flex items-center gap-3 mb-1">
+            <div class="neu-icon-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <span class="font-mono text-luna-sky/70 text-[11px] tracking-widest uppercase">Our Squad</span>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar"><span>MA</span></div>
+            <div class="profile-info"><h4 class="profile-name">Moch Azriel Putra Novendra</h4><span class="profile-role">Koordinator 1</span><span class="profile-kekel">Gamajatim</span></div>
+            <div class="profile-badge-rank rank-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="#A7EBF2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar"><span>NS</span></div>
+            <div class="profile-info"><h4 class="profile-name">Noura Syahfa Azzahra</h4><span class="profile-role">Koordinator 2</span><span class="profile-kekel">Fosgama</span></div>
+            <div class="profile-badge-rank rank-2"><svg width="12" height="12" viewBox="0 0 24 24" fill="#54ACBF"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar"><span>FA</span></div>
+            <div class="profile-info"><h4 class="profile-name">Fathan Adinata</h4><span class="profile-role">Secretary</span><span class="profile-kekel">Gamajatim</span></div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-avatar"><span>LL</span></div>
+            <div class="profile-info"><h4 class="profile-name">Lidya Lorensya</h4><span class="profile-role">Treasurer</span><span class="profile-kekel">KKS</span></div>
+          </div>
+        </div>
+
+        <!-- Accordion Jobdesk -->
+        <div class="jobdesk-col flex flex-col gap-5" data-aos="fadeInUp" data-aos-delay="200">
+          <div class="col-label flex items-center gap-3 mb-1">
+            <div class="neu-icon-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <span class="font-mono text-luna-sky/70 text-[11px] tracking-widest uppercase">Our Jobdesk</span>
+          </div>
+          <div class="accordion-wrap flex flex-col gap-3" id="accordion-jobdesk">
+            <div class="accordion-item" data-index="0">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">01</div><div class="acc-title-wrap"><span class="acc-title">Membuka Pendaftaran Peserta</span><span class="acc-tag">Administrasi</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Pendaftaran peserta direncanakan akan dibuka dalam 2 gelombang. Gelombang pertama sebelum ujian, gelombang kedua setelah ujian.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Semua kuota perlombaan telah terpenuhi.</p></div></div></div>
+            </div>
+            <div class="accordion-item" data-index="1">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">02</div><div class="acc-title-wrap"><span class="acc-title">Verifikasi Pendaftaran</span><span class="acc-tag">Validasi</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Data peserta yang telah masuk akan diperiksa sesuai sop yang telah ada, untuk mendukung sportifitas perlombaan.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Tidak ada data fiktif, double, atau manipulasi identitas.</p></div></div></div>
+            </div>
+            <div class="accordion-item" data-index="2">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">03</div><div class="acc-title-wrap"><span class="acc-title">Registrasi Ulang</span><span class="acc-tag">Konfirmasi</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Peserta melakukan pembayaran sebagai bukti komitmen dan tahap akhir rentetan pendaftaran.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Semua peserta menyelesaikan registrasi ulang.</p></div></div></div>
+            </div>
+            <div class="accordion-item" data-index="3">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">04</div><div class="acc-title-wrap"><span class="acc-title">Pembuatan ID-Card</span><span class="acc-tag">Produksi</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Setiap peserta akan mendapatkan ID-CARD untuk keperluan absensi dalam setiap rentetan acara perombaan.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Telah terdistribusi semua ID-CARD peserta.</p></div></div></div>
+            </div>
+            <div class="accordion-item" data-index="4">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">05</div><div class="acc-title-wrap"><span class="acc-title">Resepsionis Peserta Lomba</span><span class="acc-tag">On-site</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Mengelola absensi masuk-keluar lapangan/aula di hari-H.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Alur masuk peserta rapi dan absensi berjalan cepat tanpa antrean panjang.</p></div></div></div>
+            </div>
+            <div class="accordion-item" data-index="5">
+              <button class="accordion-header" aria-expanded="false"><div class="acc-left"><div class="acc-num font-mono">06</div><div class="acc-title-wrap"><span class="acc-title">Survei Kepuasan</span><span class="acc-tag">Evaluasi</span></div></div><div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg></div></button>
+              <div class="accordion-body"><div class="acc-content"><p class="acc-desc">Membuat dan menyebarkan kuesioner/survei digital setelah acara selesai.</p><div class="acc-indicator"><span class="acc-indicator-label">Indikator Keberhasilan</span><p class="acc-indicator-text">Mendapatkan feedback dari sebagian besar peserta sebagai bahan evaluasi untuk HI-FEST tahun depan.</p></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       ALL DATA SECTION
+  ═══════════════════════════════════════════════════ -->
+  <section id="alldata" class="alldata-section py-20 px-6">
+
+    <!-- SVG Wave — All Data -->
+    <div class="wave-layer" aria-hidden="true">
+      <svg class="absolute top-0 right-0 w-[60%] opacity-[0.06] pointer-events-none" viewBox="0 0 800 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="waveData" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#26658C"/>
+            <stop offset="100%" stop-color="#54ACBF"/>
+          </linearGradient>
+        </defs>
+        <path d="M800,0 L800,600 C700,560 600,440 500,480 C400,520 300,440 200,400 C100,360 0,300 0,300 L0,0 Z" fill="url(#waveData)"/>
+        <path d="M800,0 L800,600 C720,580 620,460 520,500 C420,540 320,460 220,420 C120,380 20,320 0,320 L0,0 Z" fill="url(#waveData)" opacity="0.4"/>
+      </svg>
+      <!-- Blob bawah kiri data -->
+      <svg class="absolute bottom-0 left-0 w-[30%] opacity-[0.05] pointer-events-none" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blobData" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#26658C"/>
+            <stop offset="100%" stop-color="#54ACBF"/>
+          </linearGradient>
+        </defs>
+        <path d="M200,20 C300,0 380,60 390,160 C400,260 340,360 240,390 C140,420 30,370 10,260 C-10,150 40,50 120,20 C155,8 165,30 200,20 Z" fill="url(#blobData)"/>
+      </svg>
+    </div>
+
+    <!-- Floating Particles — All Data -->
+    <div class="particles-layer" aria-hidden="true">
+      <div class="particle w-1 h-1 p-twinkle" style="top:8%;left:12%;animation-delay:0.2s;animation-duration:3.4s"></div>
+      <div class="particle w-1.5 h-1.5 p-pulse" style="top:20%;left:35%;animation-delay:1.6s;animation-duration:5.2s"></div>
+      <div class="particle w-2 h-2 p-drift"   style="top:40%;left:82%;animation-delay:0.9s;animation-duration:7.3s;opacity:0.18"></div>
+      <div class="particle w-1 h-1 p-pulse"   style="top:60%;left:92%;animation-delay:2.4s;animation-duration:4.1s"></div>
+      <div class="particle w-1.5 h-1.5 p-twinkle" style="top:75%;left:60%;animation-delay:0.5s;animation-duration:3.9s"></div>
+      <div class="particle w-1 h-1 p-drift"   style="top:90%;left:25%;animation-delay:1.9s;animation-duration:6.7s"></div>
+      <div class="particle w-1 h-1 p-pulse"   style="top:50%;left:5%;animation-delay:3s;animation-duration:4.8s"></div>
+      <div class="particle w-1 h-1 p-twinkle" style="top:15%;left:70%;animation-delay:0.7s;animation-duration:3s"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto flex flex-col gap-12" style="position:relative;z-index:2">
+
+      <!-- Section Header -->
+      <div class="section-header flex flex-col gap-3" data-aos="fadeInUp">
+        <div class="badge-pill w-fit">
+          <span class="badge-dot"></span>
+          <span class="font-mono text-[11px] text-luna-sky tracking-widest uppercase">All Data · Temporary Update</span>
+        </div>
+        <div class="flex items-end justify-between flex-wrap gap-4">
+          <div>
+            <h2 class="font-display text-luna-sky text-3xl lg:text-4xl font-bold leading-tight">Data Update<span class="text-luna-teal">.</span></h2>
+            <p class="font-body text-luna-sky/50 text-sm max-w-md leading-relaxed mt-2">Rekap seluruh data pendaftar HI-FEST 2026 — diperbarui secara berkala oleh Divisi Pendataan.</p>
+          </div>
+          <div class="last-updated-badge">
+            <div class="neu-icon-sm flex-shrink-0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+            <div><p class="font-mono text-luna-sky/40 text-[9px] uppercase tracking-widest">Terakhir diperbarui</p><p class="font-mono text-luna-teal text-[11px]" id="last-updated-time">— Menunggu data —</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Grid -->
+      <div class="top-grid grid grid-cols-1 lg:grid-cols-[45fr_55fr] gap-6" data-aos="fadeInUp" data-aos-delay="100">
+        <div class="left-mini-grid grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Card Kategori Lomba -->
+          <div class="bento-mini-card" id="card-kategori-lomba">
+            <div class="mini-card-header"><div class="neu-icon-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg></div><div><p class="font-mono text-luna-sky text-[10px] tracking-widest uppercase">Kategori Lomba</p><p class="font-body text-luna-sky/40 text-[9px]">Olahraga vs Pendidikan</p></div></div>
+            <div class="ring-wrap"><div class="ring-container"><svg class="ring-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle class="ring-bg" cx="40" cy="40" r="30"/><circle class="ring-sport" cx="40" cy="40" r="30" id="ring-sport"/><circle class="ring-edu" cx="40" cy="40" r="22" id="ring-edu"/></svg><div class="ring-center"><span class="ring-total font-mono" id="ring-total-lomba">375</span><span class="ring-label">Total</span></div></div></div>
+            <div class="ring-legend"><div class="legend-item"><span class="legend-dot sport-dot"></span><div><p class="legend-name">Olahraga</p><p class="legend-val sport-val font-mono" id="val-sport">322</p></div></div><div class="legend-item"><span class="legend-dot edu-dot"></span><div><p class="legend-name">Pendidikan</p><p class="legend-val edu-val font-mono" id="val-edu">53</p></div></div></div>
+          </div>
+          <!-- Card Kategori Peserta -->
+          <div class="bento-mini-card" id="card-kategori-peserta">
+            <div class="mini-card-header"><div class="neu-icon-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><p class="font-mono text-luna-sky text-[10px] tracking-widest uppercase">Kategori Peserta</p><p class="font-body text-luna-sky/40 text-[9px]">Independen vs Delegasi</p></div></div>
+            <div class="hbar-group">
+              <div class="hbar-item"><div class="hbar-top"><span class="hbar-label">Independen</span><span class="hbar-val font-mono indep-val" id="val-indep">211</span></div><div class="hbar-track"><div class="hbar-fill indep-fill" id="bar-indep" style="width:0%"></div></div><span class="hbar-pct font-mono indep-pct" id="pct-indep">69.8%</span></div>
+              <div class="hbar-item"><div class="hbar-top"><span class="hbar-label">Delegasi Mediator</span><span class="hbar-val font-mono deleg-val" id="val-deleg">164</span></div><div class="hbar-track"><div class="hbar-fill deleg-fill" id="bar-deleg" style="width:0%"></div></div><span class="hbar-pct font-mono deleg-pct" id="pct-deleg">30.2%</span></div>
+              <div class="hbar-total-row"><span class="font-body text-luna-sky/35 text-[11px]">Total Peserta</span><span class="font-mono text-luna-sky text-sm font-bold" id="total-peserta">375</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Card Jenis Lomba -->
+        <div class="bento-card data-card" id="card-jenis-lomba">
+          <div class="data-card-header">
+            <div class="flex items-center gap-3"><div class="neu-icon-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><p class="font-mono text-luna-sky text-[11px] tracking-widest uppercase">Data per Jenis Perlombaan</p><p class="font-body text-luna-sky/40 text-[10px]">6 cabang · diurutkan terbanyak</p></div></div>
+            <div class="chart-legend-row"><span class="chart-legend-item sport-legend">Olahraga</span><span class="chart-legend-item edu-legend">Pendidikan</span></div>
+          </div>
+          <div class="hchart-wrap" id="hchart-jenis">
+            <div class="hchart-row" data-category="sport"><span class="hchart-label">Futsal</span><div class="hchart-track"><div class="hchart-bar sport-bar" id="hbar-futsal" style="width:0%" data-val="0"><span class="hchart-val font-mono">266</span></div></div></div>
+            <div class="hchart-row" data-category="sport"><span class="hchart-label">Badminton</span><div class="hchart-track"><div class="hchart-bar sport-bar" id="hbar-badminton" style="width:0%" data-val="0"><span class="hchart-val font-mono">34</span></div></div></div>
+            <div class="hchart-row" data-category="sport"><span class="hchart-label">Tenis Meja</span><div class="hchart-track"><div class="hchart-bar sport-bar" id="hbar-tenis" style="width:0%" data-val="0"><span class="hchart-val font-mono">22</span></div></div></div>
+            <div class="hchart-row" data-category="edu"><span class="hchart-label">Lomba Cerdas Cermat</span><div class="hchart-track"><div class="hchart-bar edu-bar" id="hbar-lcc" style="width:0%" data-val="0"><span class="hchart-val font-mono">21</span></div></div></div>
+            <div class="hchart-row" data-category="edu"><span class="hchart-label">Pidato Bahasa Arab</span><div class="hchart-track"><div class="hchart-bar edu-bar" id="hbar-pidato" style="width:0%" data-val="0"><span class="hchart-val font-mono">15</span></div></div></div>
+            <div class="hchart-row" data-category="edu"><span class="hchart-label">Story Telling</span><div class="hchart-track"><div class="hchart-bar edu-bar" id="hbar-story" style="width:0%" data-val="0"><span class="hchart-val font-mono">17</span></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Grid -->
+      <div class="bottom-grid grid grid-cols-1 lg:grid-cols-2 gap-6" data-aos="fadeInUp" data-aos-delay="150">
+        <!-- Card Jenjang -->
+        <div class="bento-card data-card" id="card-jenjang">
+          <div class="data-card-header"><div class="flex items-center gap-3"><div class="neu-icon-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><path d="M22 10v6M17 5v11M12 0v16M7 7v9M2 12v4"/></svg></div><div><p class="font-mono text-luna-sky text-[11px] tracking-widest uppercase">Data per Jenjang Pendidikan</p><p class="font-body text-luna-sky/40 text-[10px]">7 jenjang · gradasi monokromatik</p></div></div></div>
+          <div class="vchart-wrap">
+            <div class="vchart-area" id="vchart-jenjang">
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-dk">107</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-dk" style="height:0%" data-mono="1"></div></div></div><span class="vcol-label">DK</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-mahad">34</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-mahad" style="height:0%" data-mono="2"></div></div></div><span class="vcol-label">Ma'had</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-idady">51</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-idady" style="height:0%" data-mono="3"></div></div></div><span class="vcol-label">I'dady</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-tsanawy">74</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-tsanawy" style="height:0%" data-mono="4"></div></div></div><span class="vcol-label">Tsanawy</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-kuliah">1</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-kuliah" style="height:0%" data-mono="5"></div></div></div><span class="vcol-label">Kuliah</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-aldk">14</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-aldk" style="height:0%" data-mono="6"></div></div></div><span class="vcol-label">Alumni DK</span></div>
+              <div class="vcol-item"><div class="vcol-bar-wrap"><span class="vcol-val font-mono" id="vval-almahad">84</span><div class="vcol-bar-bg"><div class="vcol-bar" id="vbar-almahad" style="height:0%" data-mono="7"></div></div></div><span class="vcol-label">Alumni<br/>Ma'had</span></div>
+            </div>
+            <div class="vchart-baseline"></div>
+          </div>
+        </div>
+        <!-- Card Kekeluargaan -->
+        <div class="bento-card data-card" id="card-kekeluargaan">
+          <div class="data-card-header"><div class="flex items-center gap-3"><div class="neu-icon-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div><p class="font-mono text-luna-sky text-[11px] tracking-widest uppercase">Data per Kekeluargaan</p><p class="font-body text-luna-sky/40 text-[10px]">16 kekeluargaan · zebra striping</p></div></div></div>
+          <div class="table-controls">
+            <div class="search-wrap"><div class="search-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2" opacity="0.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><input type="text" id="search-kekel" placeholder="Cari kekeluargaan..." class="search-input" autocomplete="off"/></div>
+            <button class="sort-btn" id="sort-btn" title="Urutkan" aria-label="Toggle sort order"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="2" id="sort-icon"><line x1="4" y1="6" x2="11" y2="6"/><line x1="4" y1="12" x2="13" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><polyline points="15,3 18,6 21,3"/><polyline points="15,21 18,18 21,21"/></svg><span class="font-mono text-[9px] text-luna-sky/50 tracking-widest" id="sort-label">A–Z</span></button>
+          </div>
+          <div class="table-outer">
+            <div class="table-head-row"><span class="th-no">No</span><span class="th-name">Nama Kekeluargaan</span><span class="th-total">Total</span></div>
+            <div class="table-body-scroll" id="table-kekel-body">
+              <div class="tr-row" data-name="FOSGAMA"  data-val="0"><span class="td-no">1</span><span class="td-name">FOSGAMA</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">1</span></div></div>
+              <div class="tr-row" data-name="GAMA JATIM" data-val="0"><span class="td-no">2</span><span class="td-name">GAMA JATIM</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">16</span></div></div>
+              <div class="tr-row" data-name="HMMSU" data-val="0"><span class="td-no">3</span><span class="td-name">HMMSU</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">13</span></div></div>
+              <div class="tr-row" data-name="IKMAL" data-val="0"><span class="td-no">4</span><span class="td-name">IKMAL</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">16</span></div></div>
+              <div class="tr-row" data-name="KEMASS" data-val="0"><span class="td-no">5</span><span class="td-name">KEMASS</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">26</span></div></div>
+              <div class="tr-row" data-name="KKS" data-val="0"><span class="td-no">6</span><span class="td-name">KKS</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">43</span></div></div>
+              <div class="tr-row" data-name="KMA" data-val="0"><span class="td-no">7</span><span class="td-name">KMA</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">1</span></div></div>
+              <div class="tr-row" data-name="KMB" data-val="0"><span class="td-no">8</span><span class="td-name">KMB</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">8</span></div></div>
+              <div class="tr-row" data-name="KMJ" data-val="0"><span class="td-no">9</span><span class="td-name">KMJ</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">7</span></div></div>
+              <div class="tr-row" data-name="KMKM" data-val="0"><span class="td-no">10</span><span class="td-name">KMKM</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">9</span></div></div>
+              <div class="tr-row" data-name="KMM" data-val="0"><span class="td-no">11</span><span class="td-name">KMM</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">20</span></div></div>
+              <div class="tr-row" data-name="KMNTB" data-val="0"><span class="td-no">12</span><span class="td-name">KMNTB</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">58</span></div></div>
+              <div class="tr-row" data-name="KPJ" data-val="0"><span class="td-no">13</span><span class="td-name">KPJ</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">39</span></div></div>
+              <div class="tr-row" data-name="KPMJB" data-val="0"><span class="td-no">14</span><span class="td-name">KPMJB</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">67</span></div></div>
+              <div class="tr-row" data-name="KSMR" data-val="0"><span class="td-no">15</span><span class="td-name">KSMR</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">22</span></div></div>
+              <div class="tr-row" data-name="KSW" data-val="0"><span class="td-no">16</span><span class="td-name">KSW</span><div class="td-total-wrap"><div class="td-mini-bar"><div class="td-mini-fill" style="width:0%"></div></div><span class="td-total font-mono">22</span></div></div>
+              <div class="empty-state hidden" id="table-empty"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A7EBF2" stroke-width="1.5" opacity="0.25"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p class="font-body text-luna-sky/25 text-sm">Tidak ditemukan</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       JAVASCRIPT — All in one file
+  ═══════════════════════════════════════════════════ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* ── 1. NAVBAR ── */
+    const navbar = document.getElementById('navbar');
+    const handleNavbarScroll = () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+    handleNavbarScroll();
+
+    /* ── 2. ACTIVE LINK on Scroll ── */
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main[id], section[id]');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { root: null, rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => sectionObserver.observe(s));
+
+    /* ── 3. MOBILE MENU ── */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamBars    = document.querySelectorAll('.ham-bar');
+    let isMenuOpen   = false;
+    const openMenu = () => {
+      mobileMenu.classList.remove('hidden'); isMenuOpen = true;
+      hamBars[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+      hamBars[1].style.opacity   = '0';
+      hamBars[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+    };
+    const closeMenu = () => {
+      mobileMenu.classList.add('hidden'); isMenuOpen = false;
+      hamBars[0].style.transform = ''; hamBars[1].style.opacity = ''; hamBars[2].style.transform = '';
+    };
+    hamburger.addEventListener('click', () => isMenuOpen ? closeMenu() : openMenu());
+    document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', closeMenu));
+    window.addEventListener('resize', () => { if (window.innerWidth >= 768 && isMenuOpen) closeMenu(); });
+
+    /* ── 4. SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.getElementById(this.getAttribute('href').slice(1));
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.offsetTop - navbar.offsetHeight, behavior: 'smooth' });
+      });
+    });
+
+    /* ── 5. BENTO CARD TILT ── */
+    const bentoCard = document.querySelector('.bento-card');
+    if (bentoCard && window.matchMedia('(min-width: 1024px)').matches) {
+      bentoCard.addEventListener('mousemove', (e) => {
+        const rect = bentoCard.getBoundingClientRect();
+        const rx = ((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * -5;
+        const ry = ((e.clientX - rect.left - rect.width/2) / (rect.width/2))  *  5;
+        bentoCard.style.transform  = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        bentoCard.style.transition = 'transform 0.08s ease-out';
+      });
+      bentoCard.addEventListener('mouseleave', () => {
+        bentoCard.style.transform  = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+        bentoCard.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      });
+    }
+
+    /* ── 6. AOS (Animate On Scroll) ── */
+    const aosElements = document.querySelectorAll('[data-aos]');
+    const aosObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('aos-visible'); aosObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    aosElements.forEach(el => aosObserver.observe(el));
+
+    /* ── 7. TIMELINE — Progress Bar ── */
+    const track    = document.getElementById('timeline-track');
+    const progress = document.getElementById('tl-progress');
+    if (track && progress) {
+      const updateProgress = () => {
+        const { scrollLeft, scrollWidth, clientWidth } = track;
+        const max = scrollWidth - clientWidth;
+        progress.style.width = `${max > 0 ? (scrollLeft / max * 100) : 0}%`;
+      };
+      track.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    }
+
+    /* ── 8. TIMELINE — Drag to Scroll ── */
+    if (track) {
+      let isDragging = false, startX = 0, scrollStart = 0, moved = false;
+      track.addEventListener('mousedown', e => { isDragging = true; moved = false; startX = e.pageX - track.offsetLeft; scrollStart = track.scrollLeft; track.style.cursor = 'grabbing'; });
+      track.addEventListener('mousemove', e => { if (!isDragging) return; const dx = (e.pageX - track.offsetLeft) - startX; if (Math.abs(dx) > 5) moved = true; track.scrollLeft = scrollStart - dx; });
+      const stopDrag = () => { isDragging = false; track.style.cursor = 'grab'; };
+      track.addEventListener('mouseup', stopDrag);
+      track.addEventListener('mouseleave', stopDrag);
+      track.addEventListener('click', e => { if (moved) e.stopPropagation(); }, true);
+      track.setAttribute('tabindex', '0');
+      track.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: 204, behavior: 'smooth' }); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); track.scrollBy({ left: -204, behavior: 'smooth' }); }
+      });
+    }
+
+    /* ── 9. TIMELINE — Auto-scroll to active ── */
+    if (track) {
+      const activeCard = track.querySelector('.active-card');
+      if (activeCard) setTimeout(() => { track.scrollTo({ left: activeCard.offsetLeft - 24, behavior: 'smooth' }); }, 600);
+    }
+
+    /* ── 10. ACCORDION ── */
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      if (!header) return;
+      header.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.accordion-item.open').forEach(other => {
+          if (other !== item) { other.classList.remove('open'); other.querySelector('.accordion-header')?.setAttribute('aria-expanded', 'false'); }
+        });
+        item.classList.toggle('open', !isOpen);
+        header.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+
+    /* ── 11. PROFILE CARDS TILT ── */
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      document.querySelectorAll('.profile-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const rx = ((e.clientY - rect.top  - rect.height/2) / (rect.height/2)) * -3;
+          const ry = ((e.clientX - rect.left - rect.width /2) / (rect.width /2)) *  3;
+          card.style.transform  = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
+          card.style.transition = 'transform 0.05s ease-out';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform  = '';
+          card.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease';
+        });
+      });
+    }
+
+    /* ── 12. DATA SECTION — Chart Animations ── */
+    let chartsAnimated = false;
+    let tableData = [];
+    let sortMode  = 'az';
+    let searchTerm = '';
+
+    const dataSection = document.getElementById('alldata');
+    if (dataSection) {
+      const dataSectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !chartsAnimated) {
+            chartsAnimated = true;
+            animateAllCharts();
+            dataSectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      dataSectionObserver.observe(dataSection);
+    }
+
+    function animateAllCharts() {
+      document.querySelectorAll('.hchart-bar').forEach((bar, i) => {
+        setTimeout(() => { bar.style.width = bar.getAttribute('data-target-w') || '0%'; }, i * 100);
+      });
+      document.querySelectorAll('.vcol-bar').forEach((bar, i) => {
+        setTimeout(() => { bar.style.height = bar.getAttribute('data-target-h') || '0%'; }, i * 120);
+      });
+      ['bar-indep', 'bar-deleg'].forEach((id, i) => {
+        const bar = document.getElementById(id);
+        if (bar) setTimeout(() => { bar.style.width = bar.getAttribute('data-target-w') || '0%'; }, i * 150 + 200);
+      });
+      animateRings();
+      animateTableBars();
+    }
+
+    function animateRings() {
+      const ringSport = document.getElementById('ring-sport');
+      const ringEdu   = document.getElementById('ring-edu');
+      if (!ringSport || !ringEdu) return;
+      const pSport = parseFloat(ringSport.getAttribute('data-pct') || 0);
+      const pEdu   = parseFloat(ringEdu.getAttribute('data-pct')   || 0);
+      ringSport.style.strokeDashoffset = 188.5 - (188.5 * pSport / 100);
+      ringEdu.style.strokeDashoffset   = 138.2 - (138.2 * pEdu   / 100);
+    }
+
+    function animateTableBars() {
+      document.querySelectorAll('.td-mini-fill').forEach((fill, i) => {
+        setTimeout(() => { fill.style.width = fill.getAttribute('data-target-w') || '0%'; }, i * 40 + 300);
+      });
+    }
+
+    /* ── 13. TABLE Search & Sort ── */
+    const searchInput = document.getElementById('search-kekel');
+    if (searchInput) searchInput.addEventListener('input', () => { searchTerm = searchInput.value.trim().toLowerCase(); renderTable(); });
+
+    const sortBtn = document.getElementById('sort-btn');
+    const sortLabel = document.getElementById('sort-label');
+    const sortCycles = ['az', 'za', 'desc', 'asc'];
+    const sortLabels = { az: 'A–Z', za: 'Z–A', desc: '↓ Max', asc: '↑ Min' };
+    if (sortBtn) sortBtn.addEventListener('click', () => {
+      sortMode = sortCycles[(sortCycles.indexOf(sortMode) + 1) % sortCycles.length];
+      if (sortLabel) sortLabel.textContent = sortLabels[sortMode];
+      renderTable();
+    });
+
+    function renderTable() {
+      const bodyEl  = document.getElementById('table-kekel-body');
+      const emptyEl = document.getElementById('table-empty');
+      if (!bodyEl) return;
+      const rows = Array.from(bodyEl.querySelectorAll('.tr-row'));
+      const filtered = rows.filter(r => (r.getAttribute('data-name') || '').toLowerCase().includes(searchTerm));
+      filtered.sort((a, b) => {
+        const nA = a.getAttribute('data-name') || '', nB = b.getAttribute('data-name') || '';
+        const vA = parseInt(a.getAttribute('data-val')) || 0, vB = parseInt(b.getAttribute('data-val')) || 0;
+        if (sortMode === 'az')   return nA.localeCompare(nB);
+        if (sortMode === 'za')   return nB.localeCompare(nA);
+        if (sortMode === 'desc') return vB - vA;
+        if (sortMode === 'asc')  return vA - vB;
+        return 0;
+      });
+      const maxVal = Math.max(...filtered.map(r => parseInt(r.getAttribute('data-val')) || 0));
+      rows.forEach(r => { r.style.display = 'none'; r.classList.remove('is-top'); });
+      filtered.forEach((row, idx) => {
+        row.style.display = ''; row.style.order = idx;
+        const tdNo = row.querySelector('.td-no');
+        if (tdNo) tdNo.textContent = idx + 1;
+        const val = parseInt(row.getAttribute('data-val')) || 0;
+        if (val > 0 && val === maxVal) row.classList.add('is-top');
+        row.style.background = idx % 2 === 0 ? 'rgba(167, 235, 242, 0.025)' : '';
+      });
+      filtered.forEach(row => bodyEl.appendChild(row));
+      if (emptyEl) emptyEl.classList.toggle('hidden', filtered.length > 0);
+    }
+
+    /* ── 14. LAST UPDATED ── */
+    function setLastUpdated() {
+      const el = document.getElementById('last-updated-time');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
+        + ' · ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    /* ── 15. PUBLIC APIs ── */
+    window.updateStats = function(data = {}) {
+      const fmt = n => typeof n === 'number' ? n.toLocaleString('id-ID') : (n ?? '—');
+      const counter  = document.querySelector('.counter');
+      const statVals = document.querySelectorAll('.mini-stat-val');
+      if (counter && data.total !== undefined) animateCounter(counter, 0, data.total, 1500);
+      if (statVals[0] && data.verified !== undefined) statVals[0].textContent = fmt(data.verified);
+      if (statVals[1] && data.pending  !== undefined) statVals[1].textContent = fmt(data.pending);
+      if (statVals[2] && data.divisi   !== undefined) statVals[2].textContent = fmt(data.divisi);
+    };
+
+    function animateCounter(el, from, to, duration) {
+      if (typeof to !== 'number') { el.textContent = to; return; }
+      const start = performance.now();
+      const step = (ts) => {
+        const p = Math.min((ts - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(from + (to - from) * ease).toLocaleString('id-ID');
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    window.updateAllData = function(data = {}) {
+      setLastUpdated();
+      const sportVal = data.sport || 0, eduVal = data.edu || 0;
+      const totalLomba = sportVal + eduVal;
+      const ringSport = document.getElementById('ring-sport');
+      const ringEdu   = document.getElementById('ring-edu');
+      if (ringSport) ringSport.setAttribute('data-pct', totalLomba ? (sportVal / totalLomba * 100).toFixed(1) : 0);
+      if (ringEdu)   ringEdu.setAttribute('data-pct',   totalLomba ? (eduVal   / totalLomba * 100).toFixed(1) : 0);
+      const elTL = document.getElementById('ring-total-lomba');
+      const elVS = document.getElementById('val-sport');
+      const elVE = document.getElementById('val-edu');
+      if (elTL) elTL.textContent = totalLomba.toLocaleString('id-ID');
+      if (elVS) elVS.textContent = sportVal.toLocaleString('id-ID');
+      if (elVE) elVE.textContent = eduVal.toLocaleString('id-ID');
+      const indepVal = data.indep || 0, delegVal = data.deleg || 0;
+      const totalPeserta = indepVal + delegVal;
+      const setHbar = (fillId, valId, pctId, val, total) => {
+        const pct = total ? Math.round(val / total * 100) : 0;
+        const bar = document.getElementById(fillId);
+        if (bar) { bar.setAttribute('data-target-w', `${pct}%`); if (chartsAnimated) bar.style.width = `${pct}%`; }
+        const elV = document.getElementById(valId), elP = document.getElementById(pctId);
+        if (elV) elV.textContent = val.toLocaleString('id-ID');
+        if (elP) elP.textContent = `${pct}%`;
+      };
+      setHbar('bar-indep', 'val-indep', 'pct-indep', indepVal, totalPeserta);
+      setHbar('bar-deleg', 'val-deleg', 'pct-deleg', delegVal, totalPeserta);
+      const elTP = document.getElementById('total-peserta');
+      if (elTP) elTP.textContent = totalPeserta.toLocaleString('id-ID');
+      const jenisMap = { 'hbar-futsal': data.futsal||0, 'hbar-badminton': data.badminton||0, 'hbar-tenis': data.tenis||0, 'hbar-lcc': data.lcc||0, 'hbar-pidato': data.pidato||0, 'hbar-story': data.story||0 };
+      const maxJ = Math.max(...Object.values(jenisMap));
+      Object.entries(jenisMap).forEach(([id, val]) => {
+        const bar = document.getElementById(id);
+        if (!bar) return;
+        const pct = maxJ ? Math.round(val / maxJ * 88) : 0;
+        bar.setAttribute('data-target-w', `${pct}%`); bar.setAttribute('data-val', val);
+        const ve = bar.querySelector('.hchart-val');
+        if (ve) ve.textContent = val > 0 ? val.toLocaleString('id-ID') : '—';
+        if (chartsAnimated) bar.style.width = `${pct}%`;
+      });
+      const hchartWrap = document.getElementById('hchart-jenis');
+      if (hchartWrap) {
+        Array.from(hchartWrap.querySelectorAll('.hchart-row'))
+          .sort((a, b) => (parseInt(b.querySelector('.hchart-bar')?.getAttribute('data-val'))||0) - (parseInt(a.querySelector('.hchart-bar')?.getAttribute('data-val'))||0))
+          .forEach(r => hchartWrap.appendChild(r));
+      }
+      const jenjangMap = { dk: data.dk||0, mahad: data.mahad||0, idady: data.idady||0, tsanawy: data.tsanawy||0, kuliah: data.kuliah||0, aldk: data.aldk||0, almahad: data.almahad||0 };
+      const maxJE = Math.max(...Object.values(jenjangMap));
+      Object.entries(jenjangMap).forEach(([key, val]) => {
+        const bar = document.getElementById(`vbar-${key}`);
+        const ve  = document.getElementById(`vval-${key}`);
+        if (!bar) return;
+        const pct = maxJE ? Math.round(val / maxJE * 90) : 0;
+        bar.setAttribute('data-target-h', `${pct}%`);
+        if (ve) ve.textContent = val > 0 ? val : '—';
+        if (chartsAnimated) bar.style.height = `${pct}%`;
+      });
+      if (Array.isArray(data.kekeluargaan) && data.kekeluargaan.length > 0) {
+        tableData = data.kekeluargaan;
+        const maxK = Math.max(...data.kekeluargaan.map(k => k.total || 0));
+        const bodyEl = document.getElementById('table-kekel-body');
+        if (bodyEl) {
+          bodyEl.querySelectorAll('.tr-row').forEach(row => {
+            const name  = row.getAttribute('data-name');
+            const match = data.kekeluargaan.find(k => k.name.toUpperCase() === name.toUpperCase());
+            if (!match) return;
+            const val = match.total || 0;
+            row.setAttribute('data-val', val);
+            const tdT  = row.querySelector('.td-total');
+            const minF = row.querySelector('.td-mini-fill');
+            if (tdT)  tdT.textContent = val > 0 ? val.toLocaleString('id-ID') : '—';
+            if (minF) { minF.setAttribute('data-target-w', `${maxK ? Math.round(val/maxK*100) : 0}%`); if (chartsAnimated) minF.style.width = `${maxK ? Math.round(val/maxK*100) : 0}%`; }
+          });
+        }
+        renderTable();
+      }
+      if (chartsAnimated) setTimeout(animateAllCharts, 50);
+      console.log('%c[HI-FEST 2026] All Data updated ✓', 'color:#54ACBF;');
+    };
+
+    /* ── DEV LOGS ── */
+    console.log('%c[HI-FEST 2026] Dashboard Loaded — Full Bundle ✓', 'color:#54ACBF; font-weight:bold;');
+    console.log('%cHooks: window.updateStats({total,verified,pending,divisi}) | window.updateAllData({sport,edu,indep,deleg,futsal,badminton,tenis,lcc,pidato,story,dk,mahad,idady,tsanawy,kuliah,aldk,almahad,kekeluargaan:[]})', 'color:#A7EBF2; font-size:10px;');
+  });
+  </script>
 </body>
 </html>
